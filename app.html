@@ -430,9 +430,8 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const TOKEN   = localStorage.getItem('ponto_token');
 const USER_ID = localStorage.getItem('ponto_user_id');
 const U_NOME  = localStorage.getItem('ponto_user_nome') || 'Usuário';
-const U_ROLE  = localStorage.getItem('ponto_user_role') || 'user';
-const IS_ADMIN = U_ROLE === 'admin';
-
+let   U_ROLE  = localStorage.getItem('ponto_user_role') || 'user';
+let   IS_ADMIN = U_ROLE === 'admin';
 if (!TOKEN || !USER_ID) { window.location.href = 'auth.html'; }
 
 // ── Supabase helpers ─────────────────────────────────────
@@ -488,14 +487,33 @@ const pad = n => String(n).padStart(2,'0');
 const todayKey = () => new Date().toISOString().split('T')[0];
 
 // ── Init UI ──────────────────────────────────────────────
-function initUI() {
+async function initUI() {
+  // Rebusca o role do banco sempre que o app abre (garante admin atualizado)
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/profiles?id=eq.${USER_ID}&select=nome,role`, {
+      headers: {
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + TOKEN,
+      }
+    });
+    const data = await res.json();
+    if (data && data[0]) {
+      U_ROLE   = data[0].role || 'user';
+      IS_ADMIN = U_ROLE === 'admin';
+      localStorage.setItem('ponto_user_role', U_ROLE);
+      localStorage.setItem('ponto_user_nome', data[0].nome || U_NOME);
+    }
+  } catch(e) { console.log('profile fetch error', e); }
+
   // Sidebar user info
-  const initials = U_NOME.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  const nome = localStorage.getItem('ponto_user_nome') || U_NOME;
+  const initials = nome.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
   document.getElementById('sbAvatar').textContent = initials;
-  document.getElementById('sbNome').textContent   = U_NOME;
+  document.getElementById('sbNome').textContent   = nome;
   document.getElementById('sbRole').textContent   = IS_ADMIN ? '⭐ Administrador' : 'Colaborador';
   document.getElementById('ubAvatar').textContent = initials;
-  document.getElementById('ubNome').textContent   = U_NOME;
+  document.getElementById('ubNome').textContent   = nome;
 
   // Admin nav
   if (IS_ADMIN) {
