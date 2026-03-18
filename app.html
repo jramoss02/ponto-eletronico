@@ -374,10 +374,10 @@ tbody td { padding: 13px 20px; font-size: 13.5px; color: var(--t2); vertical-ali
     </div>
     <div class="stats-grid" id="statsGrid"></div>
     <div class="toolbar">
-      <input type="text" class="field" id="adminFiltroNome" placeholder="Buscar colaborador…" oninput="renderAdmin()" style="width:170px">
-      <input type="date"  class="field" id="adminFiltroData" oninput="renderAdmin()">
-      <input type="date"  class="field" id="adminFiltroIni" placeholder="De…">
-      <input type="date"  class="field" id="adminFiltroFim" placeholder="Até…">
+      <input type="text" class="field" id="adminFiltroNome" placeholder="Buscar colaborador…" oninput="renderAdmin()" style="width:190px">
+      <input type="date"  class="field" id="adminFiltroData" style="display:none" id="adminFiltroData">
+      <input type="date"  class="field" id="adminFiltroIni" oninput="renderAdmin()">
+      <input type="date"  class="field" id="adminFiltroFim" oninput="renderAdmin()">
       <button class="btn-sec" onclick="limparAdmin()">Limpar</button>
       <button class="btn-sec" style="background:var(--blue);color:#fff;border-color:var(--blue)" onclick="exportarAdminPDF()">📄 Exportar PDF</button>
       <span style="font-size:12px;color:var(--t4)" id="adminInfo"></span>
