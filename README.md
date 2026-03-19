@@ -273,13 +273,7 @@ Contribuições são bem-vindas! Sinta-se livre para:
 3. Commitar suas mudanças: `git commit -m 'Adiciona nova feature'`
 4. Fazer push: `git push origin minha-feature`
 5. Abrir um **Pull Request**
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
+   
 ---
 
 <div align="center">
