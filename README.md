@@ -176,7 +176,7 @@ create policy "registros_admin"
 
 3. Acesse **Project Settings → API** e copie:
    - **Reference ID** → sua URL será `https://SEU_ID.supabase.co`
-   - **anon / public key** → chave começando com `eyJ...`
+   - **anon / public key** → sua chave ANON
 
 ### 2. Configurar os arquivos HTML
 
