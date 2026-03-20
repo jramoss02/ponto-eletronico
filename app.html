@@ -730,49 +730,12 @@ function onColabChange() {
 }
 
 function renderAdmin() {
-  const nome=document.getElementById('adminFiltroNome').value.trim().toLowerCase();
-  const iniV=document.getElementById('adminFiltroIni')?.value||'';
-  const fimV=document.getElementById('adminFiltroFim')?.value||'';
-  let recs=adminRecords;
-  if(nome) recs=recs.filter(r=>r.nome?.toLowerCase().includes(nome));
-  if(iniV) recs=recs.filter(r=>r.date>=iniV);
-  if(fimV) recs=recs.filter(r=>r.date<=fimV);
-  const body=document.getElementById('adminBody'),empty=document.getElementById('adminEmpty');
-  document.getElementById('adminInfo').textContent=recs.length?`${recs.length} registro(s)`:'';
-  if(!recs.length){body.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  body.innerHTML=recs.map((r,i)=>{
-    const fmt=new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
-    return `<tr><td class="c-name">${r.nome||'—'}</td><td class="c-date">${fmt}</td><td class="c-hrs">${r.horas||'—'}</td>
-      <td><span class="badge ${r.logs?.length===4?'ok':'nok'}">${r.logs?.length===4?'● Completo':'● Incompleto'}</span></td>
-      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('ad-${i}',this)">Ver</button></td>
-      <td><button class="del-btn" onclick="confirmarDelete('${r.id}','admin')">✕</button></td></tr>
-    <tr id="ad-${i}" style="display:none" class="detail-row"><td colspan="6"><div class="detail-inner">
-      ${(r.logs||[]).map(l=>`<div class="detail-line"><div class="d-dot" style="background:${CORES[l.tipo]}"></div><span style="font-weight:600;min-width:200px;font-size:12.5px">${l.tipo}</span><span style="color:var(--t3)">${l.horario}</span></div>`).join('')}
-    </div></td></tr>`;
-  }).join('');
+  // tabela geral removida — função mantida para compatibilidade
 }
 
-function limparAdmin() {
-  document.getElementById('adminFiltroNome').value='';
-  document.getElementById('adminFiltroIni').value='';
-  document.getElementById('adminFiltroFim').value='';
-  renderAdmin();
-}
-
-function setAdminShortcut(tipo) {
-  const hoje=new Date();let ini,fim=hoje;
-  if(tipo==='semana'){ini=new Date(hoje);ini.setDate(hoje.getDate()-((hoje.getDay()+6)%7));}
-  else if(tipo==='mes'){ini=new Date(hoje.getFullYear(),hoje.getMonth(),1);}
-  else {
-    if(!adminRecords.length) return;
-    const sorted=adminRecords.map(r=>r.date).sort();
-    ini=new Date(sorted[0]+'T12:00:00');fim=new Date(sorted[sorted.length-1]+'T12:00:00');
-  }
-  document.getElementById('adminFiltroIni').value=ini.toISOString().split('T')[0];
-  document.getElementById('adminFiltroFim').value=fim.toISOString().split('T')[0];
-  renderAdmin();
-}
+function limparAdmin() { renderAdmin(); }
+  
+function setAdminShortcut() {}
 
 // ══ ADMIN HISTÓRICO COLAB ═══════════════════════
 function renderColabHist() {
