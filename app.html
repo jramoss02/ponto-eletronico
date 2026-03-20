@@ -412,9 +412,9 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
     
 <!-- Tabela geral -->
     <div id="painelGeral">
-      <div style="padding:40px;text-align:center;color:var(--t4)">
-        <div style="font-size:36px;margin-bottom:12px;opacity:.3">👆</div>
-        Selecione um colaborador acima para visualizar o histórico e o calendário.
+      <div class="tcard">
+        <table><thead><tr><th>Colaborador</th><th>Data</th><th>Horas</th><th>Status</th><th>Detalhes</th><th></th></tr></thead><tbody id="adminBody"></tbody></table>
+        <div class="t-empty" id="adminEmpty" style="display:none"><div class="t-empty-ico">📭</div>Nenhum registro encontrado.</div>
       </div>
     </div>
   </section>
@@ -730,7 +730,26 @@ function onColabChange() {
 }
 
 function renderAdmin() {
-  // tabela geral removida — função mantida para compatibilidade
+  const recs = [...adminRecords].sort((a,b) => b.date.localeCompare(a.date));
+  const body = document.getElementById('adminBody');
+  const empty = document.getElementById('adminEmpty');
+  if (!body) return;
+  if (!recs.length) { body.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  body.innerHTML = recs.map((r,i) => {
+    const fmt = new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+    return `<tr>
+      <td class="c-name">${r.nome||'—'}</td>
+      <td class="c-date">${fmt}</td>
+      <td class="c-hrs">${r.horas||'—'}</td>
+      <td><span class="badge ${r.logs?.length===4?'ok':'nok'}">${r.logs?.length===4?'● Completo':'● Incompleto'}</span></td>
+      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('ad-${i}',this)">Ver</button></td>
+      <td><button class="del-btn" onclick="confirmarDelete('${r.id}','admin')">✕</button></td>
+    </tr>
+    <tr id="ad-${i}" style="display:none" class="detail-row"><td colspan="6"><div class="detail-inner">
+      ${(r.logs||[]).map(l=>`<div class="detail-line"><div class="d-dot" style="background:${CORES[l.tipo]}"></div><span style="font-weight:600;min-width:200px;font-size:12.5px">${l.tipo}</span><span style="color:var(--t3)">${l.horario}</span></div>`).join('')}
+    </div></td></tr>`;
+  }).join('');
 }
 
 function limparAdmin() { renderAdmin(); }
