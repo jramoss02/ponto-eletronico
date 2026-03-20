@@ -1260,8 +1260,7 @@ function closeModal(){document.getElementById('overlay').classList.remove('open'
 document.getElementById('overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
 
 // ── Boot ─────────────────────────────────────────────────
-initUI();
-initRegistro();
+initUI().then(() => initRegistro());
 </script>
 </body>
 </html>
