@@ -368,6 +368,19 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
         <div class="t-empty" id="colabHistEmpty" style="display:none"><div class="t-empty-ico">📭</div>Nenhum expediente encontrado.</div>
       </div>
 
+      <!-- Exportar período do colaborador -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:20px 24px;margin-bottom:20px;box-shadow:var(--sh-sm)">
+        <div style="font-size:12px;font-weight:700;color:var(--t3);letter-spacing:.3px;text-transform:uppercase;margin-bottom:12px">Exportar relatório</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <input type="date" class="field" id="colabExpIni" style="font-size:13px">
+          <input type="date" class="field" id="colabExpFim" style="font-size:13px">
+          <button class="btn-sec" onclick="setColabShortcut('semana')">Esta semana</button>
+          <button class="btn-sec" onclick="setColabShortcut('mes')">Este mês</button>
+          <button class="btn-sec" onclick="setColabShortcut('tudo')">Tudo</button>
+          <button class="btn-sec" style="background:var(--blue);color:#fff;border-color:var(--blue)" onclick="exportarColabPDF()">📄 Exportar PDF</button>
+        </div>
+      </div>
+
       <div class="cal-resumo" id="calResumo"></div>
 
       <div class="cal-card">
@@ -396,25 +409,12 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
         </div>
       </div>
     </div>
-
-    <!-- Tabela geral -->
+    
+<!-- Tabela geral -->
     <div id="painelGeral">
-      <div class="toolbar">
-        <input type="text" class="field" id="adminFiltroNome" placeholder="Buscar colaborador…" oninput="renderAdmin()" style="width:190px">
-        <input type="date" class="field" id="adminFiltroIni" oninput="renderAdmin()">
-        <input type="date" class="field" id="adminFiltroFim" oninput="renderAdmin()">
-        <button class="btn-sec" onclick="limparAdmin()">Limpar</button>
-        <button class="btn-sec" style="background:var(--blue);color:#fff;border-color:var(--blue)" onclick="exportarAdminPDF()">📄 Exportar PDF</button>
-        <span style="font-size:12px;color:var(--t4)" id="adminInfo"></span>
-      </div>
-      <div class="pills" style="margin-bottom:16px">
-        <button class="pill" onclick="setAdminShortcut('semana')">Esta semana</button>
-        <button class="pill" onclick="setAdminShortcut('mes')">Este mês</button>
-        <button class="pill" onclick="setAdminShortcut('tudo')">Todo o período</button>
-      </div>
-      <div class="tcard">
-        <table><thead><tr><th>Colaborador</th><th>Data</th><th>Horas</th><th>Status</th><th>Detalhes</th><th></th></tr></thead><tbody id="adminBody"></tbody></table>
-        <div class="t-empty" id="adminEmpty" style="display:none"><div class="t-empty-ico">📭</div>Nenhum registro encontrado.</div>
+      <div style="padding:40px;text-align:center;color:var(--t4)">
+        <div style="font-size:36px;margin-bottom:12px;opacity:.3">👆</div>
+        Selecione um colaborador acima para visualizar o histórico e o calendário.
       </div>
     </div>
   </section>
@@ -849,6 +849,34 @@ function toggleCal() {
   calAberto?chev.classList.add('open'):chev.classList.remove('open');
 }
 
+// ══ EXPORT PDF COLABORADOR (admin) ════════════
+function setColabShortcut(tipo) {
+  if (!colabAtual) return;
+  const recs = adminRecords.filter(r => r.user_id === colabAtual.user_id);
+  const hoje = new Date(); let ini, fim = hoje;
+  if (tipo==='semana') { ini=new Date(hoje); ini.setDate(hoje.getDate()-((hoje.getDay()+6)%7)); }
+  else if (tipo==='mes') { ini=new Date(hoje.getFullYear(),hoje.getMonth(),1); }
+  else {
+    if (!recs.length) return;
+    const sorted=recs.map(r=>r.date).sort();
+    ini=new Date(sorted[0]+'T12:00:00'); fim=new Date(sorted[sorted.length-1]+'T12:00:00');
+  }
+  document.getElementById('colabExpIni').value=ini.toISOString().split('T')[0];
+  document.getElementById('colabExpFim').value=fim.toISOString().split('T')[0];
+}
+
+function exportarColabPDF() {
+  if (!colabAtual) return;
+  const iniV=document.getElementById('colabExpIni').value;
+  const fimV=document.getElementById('colabExpFim').value;
+  if (!iniV||!fimV) { showToast('Selecione o período','#ff9500'); return; }
+  let recs=adminRecords.filter(r=>r.user_id===colabAtual.user_id&&r.fim);
+  recs=recs.filter(r=>r.date>=iniV&&r.date<=fimV);
+  recs.sort((a,b)=>a.date.localeCompare(b.date));
+  if (!recs.length) { showToast('Nenhum registro no período','#ff9500'); return; }
+  buildPDF(recs, iniV, fimV, colabAtual.nome);
+}
+  
 // ══ EXPORT PDF PESSOAL ════════════════════════
 function setShortcut(tipo) {
   const hoje=new Date();let ini,fim=hoje;
