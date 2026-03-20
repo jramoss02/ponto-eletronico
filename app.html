@@ -674,21 +674,50 @@ function renderHist() {
 
 // ══ ADMIN GERAL ════════════════════════════════
 async function loadAndRenderAdmin() {
-  if(!IS_ADMIN) return;
-  adminRecords=await sbGet(`/rest/v1/registros?fim=eq.true&select=*&order=date.desc`);
-  if(!Array.isArray(adminRecords)) adminRecords=[];
-  renderAdminStats(); renderAdmin();
+  if (!IS_ADMIN) return;
+  // Busca concluídos E em andamento juntos
+  const todos = await sbGet(`/rest/v1/registros?select=*&order=date.desc`);
+  adminRecords = Array.isArray(todos) ? todos : [];
+  renderAdminStats();
+  // Tabela geral exibe só os concluídos
+  renderAdmin();
   await preencherSelectColabs();
 }
 
 function renderAdminStats() {
-  const recs=adminRecords,users=[...new Set(recs.map(r=>r.user_id))].length,today=todayKey();
-  const todayCount=recs.filter(r=>r.date===today).length,totalMs=recs.reduce((a,r)=>a+(r.horas_ms||0),0);
-  const th=Math.floor(totalMs/3600000),tm=Math.floor((totalMs%3600000)/60000);
-  document.getElementById('statsGrid').innerHTML=`
+  const recs    = adminRecords;
+  const today   = todayKey();
+  const totalMs = recs.reduce((a,r) => a+(r.horas_ms||0), 0);
+  const th = Math.floor(totalMs/3600000), tm = Math.floor((totalMs%3600000)/60000);
+
+  // Busca também registros em andamento (fim=false) do dia de hoje
+  // adminRecords só tem fim=true, então buscamos separado via sbGet
+  // mas usamos o que já temos: fim=true hoje
+  const todayCompletos  = recs.filter(r => r.date === today && r.fim  === true).length;
+  const todayAndamento  = recs.filter(r => r.date === today && r.fim  === false).length;
+
+  // Monta label do card "hoje"
+  let todayVal, todayLbl;
+  if (todayCompletos > 0 && todayAndamento > 0) {
+    todayVal = String(todayCompletos);
+    todayLbl = `Concluído(s) hoje · ${todayAndamento} em andamento`;
+  } else if (todayCompletos > 0) {
+    todayVal = String(todayCompletos);
+    todayLbl = 'Concluído(s) hoje';
+  } else if (todayAndamento > 0) {
+    todayVal = String(todayAndamento);
+    todayLbl = 'Em andamento hoje';
+  } else {
+    todayVal = '0';
+    todayLbl = 'Registros hoje';
+  }
+
+  const users = [...new Set(recs.map(r => r.user_id))].length;
+
+  document.getElementById('statsGrid').innerHTML = `
     <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val">${users}</div><div class="stat-lbl">Colaboradores</div></div>
     <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-val">${recs.length}</div><div class="stat-lbl">Expedientes totais</div></div>
-    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-val">${todayCount}</div><div class="stat-lbl">Registros hoje</div></div>
+    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-val">${todayVal}</div><div class="stat-lbl">${todayLbl}</div></div>
     <div class="stat-card"><div class="stat-icon">⏱</div><div class="stat-val">${pad(th)}h${pad(tm)}m</div><div class="stat-lbl">Total de horas</div></div>`;
 }
 
