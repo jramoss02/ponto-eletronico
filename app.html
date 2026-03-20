@@ -206,6 +206,43 @@ tbody td { padding: 13px 20px; font-size: 13.5px; color: var(--t2); vertical-ali
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-thumb { background: rgba(0,0,0,.1); border-radius: 10px; }
 
+/* ─── Dropdown colaborador ──────────────────────────────── */
+.colab-select-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--rl); padding: 20px 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; box-shadow: var(--sh-sm); }
+.colab-info { display: none; align-items: center; gap: 10px; }
+.colab-info.visible { display: flex; }
+.colab-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+
+/* ─── Calendário ────────────────────────────────────────── */
+.cal-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--rl); box-shadow: var(--sh-sm); overflow: hidden; margin-bottom: 16px; }
+.cal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); transition: background .13s; }
+.cal-header-left { display: flex; align-items: center; gap: 12px; }
+.cal-title { font-size: 15px; font-weight: 700; color: var(--t1); text-transform: capitalize; }
+.cal-nav { display: flex; align-items: center; gap: 6px; }
+.cal-nav-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: var(--t2); transition: all .13s; font-weight: 700; line-height: 1; }
+.cal-nav-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-s); }
+.cal-today-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px; font-size: 12px; font-weight: 600; color: var(--t2); cursor: pointer; font-family: var(--font); transition: all .13s; }
+.cal-today-btn:hover { border-color: var(--blue); color: var(--blue); }
+.cal-toggle-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px; font-size: 12px; font-weight: 600; color: var(--t2); cursor: pointer; font-family: var(--font); transition: all .13s; display: flex; align-items: center; gap: 5px; }
+.cal-toggle-btn:hover { border-color: var(--blue); color: var(--blue); }
+.cal-chevron { display: inline-block; transition: transform .25s; }
+.cal-chevron.open { transform: rotate(180deg); }
+.cal-body { padding: 16px 20px 20px; }
+.cal-body.hidden { display: none; }
+.cal-weekdays { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 6px; }
+.cal-wd { text-align: center; font-size: 11px; font-weight: 700; color: var(--t4); letter-spacing: .5px; padding: 4px 0; text-transform: uppercase; }
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; }
+.cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px; font-weight: 500; color: var(--t2); position: relative; transition: background .15s, transform .12s; cursor: default; min-width: 32px; min-height: 32px; }
+.cal-day.empty { visibility: hidden; pointer-events: none; }
+.cal-day.today { font-weight: 700; }
+.cal-day.weekend { color: var(--t4); }
+.cal-day.worked-full { background: rgba(52,199,89,.2); color: #176d2e; font-weight: 700; }
+.cal-day.worked-full:hover { background: rgba(52,199,89,.35); transform: scale(1.1); cursor: pointer; }
+.cal-day.weekend.worked-full { color: #176d2e; }
+.cal-resumo { display: grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap: 10px; margin-bottom: 24px; }
+.cal-res-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 16px; box-shadow: var(--sh-xs); }
+.cal-res-val { font-size: 20px; font-weight: 700; color: var(--t1); letter-spacing: -.3px; }
+.cal-res-lbl { font-size: 11px; color: var(--t3); margin-top: 3px; font-weight: 500; }
+
 /* ─── Bottom nav (mobile) ───────────────────────────────── */
 .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 64px; z-index: 200; background: rgba(255,255,255,.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 0 8px; align-items: center; justify-content: space-around; }
 .bnav-btn  { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: none; border: none; cursor: pointer; padding: 8px 4px; border-radius: 12px; color: var(--t4); font-family: var(--font); }
@@ -366,36 +403,120 @@ tbody td { padding: 13px 20px; font-size: 13.5px; color: var(--t2); vertical-ali
   </section>
 
   <!-- ══ ADMIN ══ -->
-<!-- ══ ADMIN ══ -->
   <section class="page" id="page-admin">
     <div class="pg-head">
       <h1 class="pg-title">Painel Admin</h1>
       <p class="pg-sub">Visão geral de todos os colaboradores</p>
     </div>
+
+    <!-- Stats gerais -->
     <div class="stats-grid" id="statsGrid"></div>
-    <div class="toolbar">
-      <input type="text" class="field" id="adminFiltroNome" placeholder="Buscar colaborador…" oninput="renderAdmin()" style="width:190px">
-      <input type="date"  class="field" id="adminFiltroData" style="display:none" id="adminFiltroData">
-      <input type="date"  class="field" id="adminFiltroIni" oninput="renderAdmin()">
-      <input type="date"  class="field" id="adminFiltroFim" oninput="renderAdmin()">
-      <button class="btn-sec" onclick="limparAdmin()">Limpar</button>
-      <button class="btn-sec" style="background:var(--blue);color:#fff;border-color:var(--blue)" onclick="exportarAdminPDF()">📄 Exportar PDF</button>
-      <span style="font-size:12px;color:var(--t4)" id="adminInfo"></span>
-    </div>
-    <div class="pills" style="margin-bottom:16px">
-      <button class="pill" onclick="setAdminShortcut('semana')">Esta semana</button>
-      <button class="pill" onclick="setAdminShortcut('mes')">Este mês</button>
-      <button class="pill" onclick="setAdminShortcut('tudo')">Todo o período</button>
-    </div>
-    <div class="tcard">
-      <table>
-        <thead><tr><th>Colaborador</th><th>Data</th><th>Horas</th><th>Status</th><th>Detalhes</th><th></th></tr></thead>
-        <tbody id="adminBody"></tbody>
-      </table>
-      <div class="t-empty" id="adminEmpty" style="display:none">
-        <div class="t-empty-ico">📭</div>Nenhum registro encontrado.
+
+    <!-- Seletor de colaborador -->
+    <div class="colab-select-card">
+      <label style="font-size:12px;font-weight:700;color:var(--t3);letter-spacing:.3px;text-transform:uppercase;white-space:nowrap">Colaborador</label>
+      <select class="field" id="adminSelectColab" onchange="onColabChange()" style="flex:1;min-width:200px;max-width:300px">
+        <option value="">— Ver todos —</option>
+      </select>
+      <div class="colab-info" id="colabInfoBox">
+        <div class="colab-avatar" id="colabAvatar"></div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--t1)" id="colabNomeBox"></div>
+          <div style="font-size:12px;color:var(--t3)" id="colabSubBox"></div>
+        </div>
       </div>
     </div>
+
+    <!-- ── Painel individual (colaborador selecionado) ── -->
+    <div id="painelColab" style="display:none">
+
+      <!-- Histórico do colaborador -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+        <h2 style="font-size:16px;font-weight:700;color:var(--t1)">Histórico de registros</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="date" class="field" id="colabHistFiltro" oninput="renderColabHist()" style="font-size:13px">
+          <button class="btn-sec" style="font-size:12px" onclick="document.getElementById('colabHistFiltro').value='';renderColabHist()">Limpar</button>
+        </div>
+      </div>
+      <div class="tcard" style="margin-bottom:24px">
+        <table>
+          <thead><tr><th>Data</th><th>Horas</th><th>Status</th><th>Detalhes</th><th></th></tr></thead>
+          <tbody id="colabHistBody"></tbody>
+        </table>
+        <div class="t-empty" id="colabHistEmpty" style="display:none">
+          <div class="t-empty-ico">📭</div>Nenhum expediente encontrado.
+        </div>
+      </div>
+
+      <!-- Resumo do mês -->
+      <div class="cal-resumo" id="calResumo"></div>
+
+      <!-- Calendário -->
+      <div class="cal-card" id="calCard">
+        <div class="cal-header">
+          <div class="cal-header-left">
+            <button class="cal-nav-btn" onclick="mudarMes(-1);event.stopPropagation()">‹</button>
+            <span class="cal-title" id="calTitulo"></span>
+            <button class="cal-nav-btn" onclick="mudarMes(1);event.stopPropagation()">›</button>
+            <button class="cal-today-btn" onclick="irMesAtual();event.stopPropagation()">Hoje</button>
+          </div>
+          <button class="cal-toggle-btn" onclick="toggleCal()">
+            <span id="calToggleTxt">Recolher</span>
+            <span class="cal-chevron open" id="calChevron">▾</span>
+          </button>
+        </div>
+        <div class="cal-body" id="calBody">
+          <!-- legenda -->
+          <div style="display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t3)">
+              <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,149,0,.18);border:2px solid rgba(255,149,0,.4)"></div>
+              Menos de 7h
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t3)">
+              <div style="width:22px;height:22px;border-radius:50%;border:1.5px dashed var(--t5)"></div>
+              Sem registro
+            </div>
+          </div>
+          <!-- dias da semana -->
+          <div class="cal-weekdays">
+            <div class="cal-wd">Dom</div><div class="cal-wd">Seg</div><div class="cal-wd">Ter</div>
+            <div class="cal-wd">Qua</div><div class="cal-wd">Qui</div><div class="cal-wd">Sex</div>
+            <div class="cal-wd">Sáb</div>
+          </div>
+          <!-- grade dos dias -->
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Tabela geral (nenhum colaborador selecionado) ── -->
+    <div id="painelGeral">
+      <div class="toolbar">
+        <input type="text" class="field" id="adminFiltroNome" placeholder="Buscar colaborador…" oninput="renderAdmin()" style="width:190px">
+        <input type="date" class="field" id="adminFiltroData" style="display:none">
+        <input type="date" class="field" id="adminFiltroIni" oninput="renderAdmin()">
+        <input type="date" class="field" id="adminFiltroFim" oninput="renderAdmin()">
+        <button class="btn-sec" onclick="limparAdmin()">Limpar</button>
+        <button class="btn-sec" style="background:var(--blue);color:#fff;border-color:var(--blue)" onclick="exportarAdminPDF()">📄 Exportar PDF</button>
+        <span style="font-size:12px;color:var(--t4)" id="adminInfo"></span>
+      </div>
+      <div class="pills" style="margin-bottom:16px">
+        <button class="pill" onclick="setAdminShortcut('semana')">Esta semana</button>
+        <button class="pill" onclick="setAdminShortcut('mes')">Este mês</button>
+        <button class="pill" onclick="setAdminShortcut('tudo')">Todo o período</button>
+      </div>
+      <div class="tcard">
+        <table>
+          <thead><tr><th>Colaborador</th><th>Data</th><th>Horas</th><th>Status</th><th>Detalhes</th><th></th></tr></thead>
+          <tbody id="adminBody"></tbody>
+        </table>
+        <div class="t-empty" id="adminEmpty" style="display:none">
+          <div class="t-empty-ico">📭</div>Nenhum registro encontrado.
+        </div>
+      </div>
+    </div>
+
   </section>
 
 </main>
@@ -432,15 +553,16 @@ tbody td { padding: 13px 20px; font-size: 13.5px; color: var(--t2); vertical-ali
 <script>
 // ── Supabase config ──────────────────────────────────────
 // SUBSTITUA pelos seus valores do Supabase
-const SUPABASE_URL  = 'https://purhbluglpdjujqpfjnj.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1cmhibHVnbHBkanVqcXBmam5qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NTg4NTcsImV4cCI6MjA4OTMzNDg1N30.2bgOlsLu6Pb2ecyETbcR5wh6K9UGu5vOggrKXLcgqCA';
+const SUPABASE_URL  = 'SUPABASE_URL_AQUI';
+const SUPABASE_ANON = 'SUPABASE_ANON_KEY_AQUI';
 
 // ── Auth guard ───────────────────────────────────────────
 const TOKEN   = localStorage.getItem('ponto_token');
 const USER_ID = localStorage.getItem('ponto_user_id');
 const U_NOME  = localStorage.getItem('ponto_user_nome') || 'Usuário';
-let   U_ROLE  = localStorage.getItem('ponto_user_role') || 'user';
-let   IS_ADMIN = U_ROLE === 'admin';
+const U_ROLE  = localStorage.getItem('ponto_user_role') || 'user';
+const IS_ADMIN = U_ROLE === 'admin';
+
 if (!TOKEN || !USER_ID) { window.location.href = 'auth.html'; }
 
 // ── Supabase helpers ─────────────────────────────────────
@@ -496,33 +618,14 @@ const pad = n => String(n).padStart(2,'0');
 const todayKey = () => new Date().toISOString().split('T')[0];
 
 // ── Init UI ──────────────────────────────────────────────
-async function initUI() {
-  // Rebusca o role do banco sempre que o app abre (garante admin atualizado)
-  try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/profiles?id=eq.${USER_ID}&select=nome,role`, {
-      headers: {
-        'apikey': SUPABASE_ANON,
-        'Authorization': 'Bearer ' + TOKEN,
-      }
-    });
-    const data = await res.json();
-    if (data && data[0]) {
-      U_ROLE   = data[0].role || 'user';
-      IS_ADMIN = U_ROLE === 'admin';
-      localStorage.setItem('ponto_user_role', U_ROLE);
-      localStorage.setItem('ponto_user_nome', data[0].nome || U_NOME);
-    }
-  } catch(e) { console.log('profile fetch error', e); }
-
+function initUI() {
   // Sidebar user info
-  const nome = localStorage.getItem('ponto_user_nome') || U_NOME;
-  const initials = nome.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  const initials = U_NOME.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
   document.getElementById('sbAvatar').textContent = initials;
-  document.getElementById('sbNome').textContent   = nome;
+  document.getElementById('sbNome').textContent   = U_NOME;
   document.getElementById('sbRole').textContent   = IS_ADMIN ? '⭐ Administrador' : 'Colaborador';
   document.getElementById('ubAvatar').textContent = initials;
-  document.getElementById('ubNome').textContent   = nome;
+  document.getElementById('ubNome').textContent   = U_NOME;
 
   // Admin nav
   if (IS_ADMIN) {
@@ -781,14 +884,195 @@ function renderHist() {
 // ══════════════════════════════════════════════════════════
 // ADMIN PANEL
 // ══════════════════════════════════════════════════════════
+let calAno  = new Date().getFullYear();
+let calMes  = new Date().getMonth();
+let colabAtual = null; // { user_id, nome }
+let calAberto  = true;
+
 async function loadAndRenderAdmin() {
   if (!IS_ADMIN) return;
   adminRecords = await sbGet(`/rest/v1/registros?fim=eq.true&select=*&order=date.desc`);
   if (!Array.isArray(adminRecords)) adminRecords = [];
   renderAdminStats();
   renderAdmin();
+  await preencherSelectColabs();
 }
 
+async function preencherSelectColabs() {
+  const profiles = await sbGet(`/rest/v1/profiles?select=id,nome,email&order=nome.asc`);
+  const sel = document.getElementById('adminSelectColab');
+  sel.innerHTML = '<option value="">— Ver todos —</option>';
+  if (!Array.isArray(profiles)) return;
+  profiles.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.dataset.nome = p.nome;
+    opt.textContent = p.nome + (p.id === USER_ID ? ' (você)' : '');
+    sel.appendChild(opt);
+  });
+}
+
+function onColabChange() {
+  const sel  = document.getElementById('adminSelectColab');
+  const id   = sel.value;
+  const nome = sel.options[sel.selectedIndex]?.dataset?.nome || '';
+
+  if (!id) {
+    colabAtual = null;
+    document.getElementById('painelGeral').style.display = '';
+    document.getElementById('painelColab').style.display = 'none';
+    document.getElementById('colabInfoBox').classList.remove('visible');
+    return;
+  }
+
+  colabAtual = { user_id: id, nome };
+
+  // Info badge
+  const initials = nome.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  document.getElementById('colabAvatar').textContent  = initials;
+  document.getElementById('colabNomeBox').textContent = nome;
+  const recs    = adminRecords.filter(r => r.user_id === id);
+  const totalMs = recs.reduce((a,r)=>a+(r.horas_ms||0),0);
+  const th=Math.floor(totalMs/3600000), tm=Math.floor((totalMs%3600000)/60000);
+  document.getElementById('colabSubBox').textContent  = `${recs.length} expediente(s) · ${pad(th)}h${pad(tm)}m total`;
+  document.getElementById('colabInfoBox').classList.add('visible');
+
+  // Mostra painel individual
+  document.getElementById('painelGeral').style.display = 'none';
+  document.getElementById('painelColab').style.display = '';
+
+  // Reset mês calendário para o atual
+  calAno = new Date().getFullYear();
+  calMes = new Date().getMonth();
+  calAberto = true;
+
+  renderColabHist();
+  renderCalendario();
+}
+
+// ── Histórico individual do colaborador ──────────────────
+function renderColabHist() {
+  if (!colabAtual) return;
+  const filtro = document.getElementById('colabHistFiltro').value;
+  let recs = adminRecords.filter(r => r.user_id === colabAtual.user_id);
+  if (filtro) recs = recs.filter(r => r.date === filtro);
+  recs.sort((a,b) => b.date.localeCompare(a.date));
+
+  const body  = document.getElementById('colabHistBody');
+  const empty = document.getElementById('colabHistEmpty');
+  if (!recs.length) { body.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  body.innerHTML = recs.map((r,i) => {
+    const fmt = new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+    return `<tr>
+      <td class="c-date">${fmt}</td>
+      <td class="c-hrs">${r.horas||'—'}</td>
+      <td><span class="badge ${r.logs?.length===4?'ok':'nok'}">${r.logs?.length===4?'● Completo':'● Incompleto'}</span></td>
+      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('ch-${i}',this)">Ver</button></td>
+      <td><button class="del-btn" onclick="confirmarDelete('${r.id}','admin')">✕</button></td>
+    </tr>
+    <tr id="ch-${i}" style="display:none" class="detail-row">
+      <td colspan="5"><div class="detail-inner">
+        ${(r.logs||[]).map(l=>`<div class="detail-line"><div class="d-dot" style="background:${CORES[l.tipo]}"></div><span style="font-weight:600;min-width:200px;font-size:12.5px">${l.tipo}</span><span style="color:var(--t3)">${l.horario}</span></div>`).join('')}
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Calendário ───────────────────────────────────────────
+function renderCalendario() {
+  if (!colabAtual) return;
+
+  const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  document.getElementById('calTitulo').textContent = `${MESES[calMes]} ${calAno}`;
+
+  // Filtra registros do colaborador neste mês/ano
+  const mesStr = `${calAno}-${pad(calMes+1)}`;
+  const recsDoMes = adminRecords.filter(r =>
+    r.user_id === colabAtual.user_id && r.date.startsWith(mesStr)
+  );
+
+  // Mapa date → horas_ms
+  const mapaHoras = {};
+  recsDoMes.forEach(r => { mapaHoras[r.date] = r.horas_ms || 0; });
+
+  // Resumo do mês
+  const diasTrabalhados = recsDoMes.length;
+  const diasCompletos   = recsDoMes.filter(r => (r.horas_ms||0) >= 7*3600000).length;
+  const totalMsDoMes    = recsDoMes.reduce((a,r)=>a+(r.horas_ms||0),0);
+  const rH=Math.floor(totalMsDoMes/3600000), rM=Math.floor((totalMsDoMes%3600000)/60000);
+  document.getElementById('calResumo').innerHTML = `
+    <div class="cal-res-card"><div class="cal-res-val">${diasTrabalhados}</div><div class="cal-res-lbl">Dias trabalhados</div></div>
+    <div class="cal-res-card"><div class="cal-res-val" style="color:var(--green)">${diasCompletos}</div><div class="cal-res-lbl">Dias com 7h+</div></div>
+    <div class="cal-res-card"><div class="cal-res-val">${pad(rH)}h${pad(rM)}m</div><div class="cal-res-lbl">Horas no mês</div></div>`;
+
+  // Grade do calendário
+  const hoje     = new Date();
+  const primeiro = new Date(calAno, calMes, 1).getDay(); // 0=dom
+  const diasNoMes= new Date(calAno, calMes+1, 0).getDate();
+
+  let html = '';
+  // Células vazias antes do dia 1
+  for (let i=0; i<primeiro; i++) html += `<div class="cal-day empty"></div>`;
+
+  for (let d=1; d<=diasNoMes; d++) {
+    const dateStr = `${calAno}-${pad(calMes+1)}-${pad(d)}`;
+    const ms      = mapaHoras[dateStr];
+    const weekday = new Date(calAno, calMes, d).getDay();
+    const isToday = calAno===hoje.getFullYear() && calMes===hoje.getMonth() && d===hoje.getDate();
+    const isWeekend = weekday===0 || weekday===6;
+
+    let cls = 'cal-day';
+    let title = '';
+    if (isToday)   cls += ' today';
+    if (isWeekend) cls += ' weekend';
+
+    if (ms !== undefined) {
+      if (ms >= 7*3600000) {
+        cls += ' worked-full';
+        const h=Math.floor(ms/3600000), m=Math.floor((ms%3600000)/60000);
+        title = `${d}: ${pad(h)}h${pad(m)}m trabalhadas ✓`;
+      } else {
+        const h=Math.floor(ms/3600000), m=Math.floor((ms%3600000)/60000);
+        title = `${d}: ${pad(h)}h${pad(m)}m trabalhadas`;
+      }
+    }
+
+    html += `<div class="${cls}" ${title?`title="${title}"`:''}>${d}</div>`;
+  }
+
+  document.getElementById('calGrid').innerHTML = html;
+
+  // Estado do toggle
+  const body = document.getElementById('calBody');
+  body.classList.toggle('hidden', !calAberto);
+  document.getElementById('calToggleTxt').textContent = calAberto ? 'Recolher' : 'Expandir';
+  const chev = document.getElementById('calChevron');
+  calAberto ? chev.classList.add('open') : chev.classList.remove('open');
+}
+
+function mudarMes(delta) {
+  calMes += delta;
+  if (calMes > 11) { calMes=0; calAno++; }
+  if (calMes < 0)  { calMes=11; calAno--; }
+  renderCalendario();
+}
+
+function irMesAtual() {
+  calAno = new Date().getFullYear();
+  calMes = new Date().getMonth();
+  renderCalendario();
+}
+
+function toggleCal() {
+  calAberto = !calAberto;
+  document.getElementById('calBody').classList.toggle('hidden', !calAberto);
+  document.getElementById('calToggleTxt').textContent = calAberto ? 'Recolher' : 'Expandir';
+  const chev = document.getElementById('calChevron');
+  calAberto ? chev.classList.add('open') : chev.classList.remove('open');
+}
+
+// ── Tabela geral ─────────────────────────────────────────
 function renderAdminStats() {
   const recs = adminRecords;
   const users = [...new Set(recs.map(r => r.user_id))].length;
@@ -804,40 +1088,40 @@ function renderAdminStats() {
 }
 
 function renderAdmin() {
-  const nome  = document.getElementById('adminFiltroNome').value.trim().toLowerCase();
-  const data  = document.getElementById('adminFiltroData').value;
+  const nome = document.getElementById('adminFiltroNome').value.trim().toLowerCase();
+  const iniV = document.getElementById('adminFiltroIni')?.value || '';
+  const fimV = document.getElementById('adminFiltroFim')?.value || '';
   let recs = adminRecords;
   if (nome) recs = recs.filter(r => r.nome?.toLowerCase().includes(nome));
-  if (data) recs = recs.filter(r => r.date === data);
+  if (iniV) recs = recs.filter(r => r.date >= iniV);
+  if (fimV) recs = recs.filter(r => r.date <= fimV);
   const body  = document.getElementById('adminBody');
   const empty = document.getElementById('adminEmpty');
   document.getElementById('adminInfo').textContent = recs.length ? `${recs.length} registro(s)` : '';
-  if (!recs.length) { body.innerHTML = ''; empty.style.display = 'block'; return; }
-  empty.style.display = 'none';
+  if (!recs.length) { body.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
   body.innerHTML = recs.map((r,i) => {
     const fmt = new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
-    return `
-      <tr>
-        <td class="c-name">${r.nome||'—'}</td>
-        <td class="c-date">${fmt}</td>
-        <td class="c-hrs">${r.horas||'—'}</td>
-        <td><span class="badge ${r.logs?.length===4?'ok':'nok'}">${r.logs?.length===4?'● Completo':'● Incompleto'}</span></td>
-        <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('ad-${i}',this)">Ver</button></td>
-        <td><button class="del-btn" onclick="confirmarDelete('${r.id}','admin')">✕</button></td>
-      </tr>
-      <tr id="ad-${i}" style="display:none" class="detail-row">
-        <td colspan="6"><div class="detail-inner">
-          ${(r.logs||[]).map(l=>`<div class="detail-line"><div class="d-dot" style="background:${CORES[l.tipo]}"></div><span style="font-weight:600;min-width:200px;font-size:12.5px">${l.tipo}</span><span style="color:var(--t3)">${l.horario}</span></div>`).join('')}
-        </div></td>
-      </tr>`;
+    return `<tr>
+      <td class="c-name">${r.nome||'—'}</td>
+      <td class="c-date">${fmt}</td>
+      <td class="c-hrs">${r.horas||'—'}</td>
+      <td><span class="badge ${r.logs?.length===4?'ok':'nok'}">${r.logs?.length===4?'● Completo':'● Incompleto'}</span></td>
+      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('ad-${i}',this)">Ver</button></td>
+      <td><button class="del-btn" onclick="confirmarDelete('${r.id}','admin')">✕</button></td>
+    </tr>
+    <tr id="ad-${i}" style="display:none" class="detail-row">
+      <td colspan="6"><div class="detail-inner">
+        ${(r.logs||[]).map(l=>`<div class="detail-line"><div class="d-dot" style="background:${CORES[l.tipo]}"></div><span style="font-weight:600;min-width:200px;font-size:12.5px">${l.tipo}</span><span style="color:var(--t3)">${l.horario}</span></div>`).join('')}
+      </div></td>
+    </tr>`;
   }).join('');
 }
 
 function limparAdmin() {
   document.getElementById('adminFiltroNome').value = '';
-  document.getElementById('adminFiltroData').value = '';
-  document.getElementById('adminFiltroIni').value  = '';
-  document.getElementById('adminFiltroFim').value  = '';
+  if (document.getElementById('adminFiltroIni')) document.getElementById('adminFiltroIni').value = '';
+  if (document.getElementById('adminFiltroFim')) document.getElementById('adminFiltroFim').value = '';
   renderAdmin();
 }
 
@@ -851,81 +1135,9 @@ function setAdminShortcut(tipo) {
     ini = new Date(sorted[0]+'T12:00:00');
     fim = new Date(sorted[sorted.length-1]+'T12:00:00');
   }
-  document.getElementById('adminFiltroIni').value = ini.toISOString().split('T')[0];
-  document.getElementById('adminFiltroFim').value = fim.toISOString().split('T')[0];
+  if (document.getElementById('adminFiltroIni')) document.getElementById('adminFiltroIni').value = ini.toISOString().split('T')[0];
+  if (document.getElementById('adminFiltroFim')) document.getElementById('adminFiltroFim').value = fim.toISOString().split('T')[0];
   renderAdmin();
-}
-
-function exportarAdminPDF() {
-  const nome = document.getElementById('adminFiltroNome').value.trim().toLowerCase();
-  const data = document.getElementById('adminFiltroData').value;
-  const iniV = document.getElementById('adminFiltroIni').value;
-  const fimV = document.getElementById('adminFiltroFim').value;
-  let recs = adminRecords.filter(r => r.fim);
-  if (nome) recs = recs.filter(r => r.nome?.toLowerCase().includes(nome));
-  if (data) recs = recs.filter(r => r.date === data);
-  if (iniV) recs = recs.filter(r => r.date >= iniV);
-  if (fimV) recs = recs.filter(r => r.date <= fimV);
-  if (!recs.length) { showToast('Nenhum registro com os filtros atuais','#ff9500'); return; }
-
-  const nomeF = document.getElementById('adminFiltroNome').value.trim() || 'Todos os colaboradores';
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight();
-  doc.setFillColor(255,255,255); doc.rect(0,0,W,H,'F');
-  doc.setFillColor(0,122,255); doc.rect(0,0,W,40,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(20); doc.setTextColor(255,255,255);
-  doc.text('Ponto Eletrônico', 14, 18);
-  doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(180,215,255);
-  doc.text('Relatório Administrativo', 14, 27);
-  doc.setFontSize(9); doc.text('Gerado em '+new Date().toLocaleString('pt-BR'), W-14, 27, {align:'right'});
-  let y=50;
-  doc.setFillColor(245,245,247); doc.roundedRect(14,y,W-28,22,3,3,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(110,110,115);
-  doc.text('COLABORADOR',20,y+7); doc.text('PERÍODO',W/2+4,y+7);
-  doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(29,29,31);
-  doc.text(nomeF, 20, y+15);
-  const iniF = iniV ? new Date(iniV+'T12:00:00').toLocaleDateString('pt-BR') : (recs.map(r=>r.date).sort()[0]||'—');
-  const fimF = fimV ? new Date(fimV+'T12:00:00').toLocaleDateString('pt-BR') : (recs.map(r=>r.date).sort().reverse()[0]||'—');
-  doc.text(`${iniF}  —  ${fimF}`, W/2+4, y+15);
-  y+=30;
-  const recsSorted=[...recs].sort((a,b)=>(a.nome||'').localeCompare(b.nome||'')||a.date.localeCompare(b.date));
-  const rows=recsSorted.map(r=>[
-    r.nome||'—',
-    new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'}),
-    r.horas||'—', r.logs?.length===4?'Completo':'Incompleto',
-    (r.logs||[]).map(l=>`${l.tipo}: ${l.horario}`).join('\n'),
-  ]);
-  doc.autoTable({
-    startY:y, head:[['Colaborador','Data','Horas','Status','Registros']], body:rows, theme:'plain',
-    styles:{font:'helvetica',fontSize:9,textColor:[61,61,63],cellPadding:{top:4,bottom:4,left:6,right:6}},
-    headStyles:{fillColor:[245,245,247],textColor:[110,110,115],fontSize:8.5,fontStyle:'bold'},
-    alternateRowStyles:{fillColor:[250,250,252]},
-    columnStyles:{0:{cellWidth:34,fontStyle:'bold',textColor:[29,29,31]},1:{cellWidth:36,textColor:[110,110,115],fontSize:8.5},2:{fontStyle:'bold',textColor:[52,199,89],halign:'center',cellWidth:22},3:{fontSize:8.5,halign:'center',cellWidth:22},4:{fontSize:7.5,textColor:[110,110,115]}},
-    margin:{left:14,right:14}, tableLineColor:[229,229,234], tableLineWidth:0.2,
-  });
-  const fy=doc.lastAutoTable.finalY+10;
-  const porColab={};
-  recs.forEach(r=>{ const n=r.nome||'—'; if(!porColab[n]) porColab[n]={total:0,ms:0}; porColab[n].total++; porColab[n].ms+=r.horas_ms||0; });
-  const totalMs=recs.reduce((a,r)=>a+(r.horas_ms||0),0);
-  const tH=Math.floor(totalMs/3600000), tM=Math.floor((totalMs%3600000)/60000);
-  const boxH=18+Object.keys(porColab).length*6+20;
-  doc.setFillColor(245,245,247); doc.roundedRect(14,fy,W-28,boxH,3,3,'F');
-  doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(110,110,115);
-  doc.text('RESUMO POR COLABORADOR',20,fy+8);
-  let ry=fy+17;
-  Object.entries(porColab).forEach(([n,d])=>{
-    const h=Math.floor(d.ms/3600000),m=Math.floor((d.ms%3600000)/60000);
-    doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(61,61,63); doc.text(n,20,ry);
-    doc.setFont('helvetica','bold'); doc.setTextColor(0,122,255); doc.text(`${d.total} exp. · ${pad(h)}h${pad(m)}m`,W-20,ry,{align:'right'}); ry+=6;
-  });
-  ry+=4;
-  doc.setFont('helvetica','bold'); doc.setFontSize(9.5); doc.setTextColor(29,29,31); doc.text('Total geral de horas:',20,ry);
-  doc.setTextColor(52,199,89); doc.text(`${pad(tH)}h ${pad(tM)}m`,W-20,ry,{align:'right'});
-  const pages=doc.internal.getNumberOfPages();
-  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(174,174,178);doc.text(`Ponto Eletrônico  ·  Relatório Admin  ·  Página ${i} de ${pages}`,W/2,H-8,{align:'center'});}
-  doc.save(`relatorio_admin_${(iniV||'completo')}_${(fimV||'completo')}.pdf`);
-  showToast('Relatório admin exportado com sucesso','#34c759');
 }
 
 // ══════════════════════════════════════════════════════════
