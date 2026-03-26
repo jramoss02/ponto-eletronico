@@ -953,7 +953,7 @@ function renderHist() {
       <td class="c-date">${esc(fmt)}</td>
       <td class="c-hrs">${esc(r.horas || '—')}</td>
       <td><span class="badge ${r.logs?.length === 4 ? 'ok' : 'nok'}">${r.logs?.length === 4 ? '● Completo' : '● Incompleto'}</span></td>
-      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('hd-${globalIdx}',this)">Ver detalhes</button></td>
+      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('hd-${globalIdx}',this)">Ver</button></td>
       <td><button class="del-btn" onclick="confirmarDelete('${esc(r.id)}','hist')">✕</button></td>
     </tr>
     <tr id="hd-${globalIdx}" style="display:none" class="detail-row">
@@ -1415,7 +1415,7 @@ function toggleDetail(id, btn) {
   const row = document.getElementById(id); if (!row) return;
   const h = row.style.display === 'none';
   row.style.display = h ? 'table-row' : 'none';
-  btn.textContent = h ? 'Ocultar' : 'Ver detalhes';
+  btn.textContent = h ? 'Ocultar' : 'Ver';
 }
 
 let toastT;
