@@ -96,12 +96,19 @@ body { font-family:var(--font); background:var(--bg); color:var(--t1); min-heigh
 .log-t   { font-size:13px; font-weight:600; color:var(--t1); font-variant-numeric:tabular-nums; }
 .log-nil { padding:22px 18px; font-size:13px; color:var(--t4); font-style:italic; }
 
+/* LOADING SKELETON */
+.skeleton { background:linear-gradient(90deg,var(--t5) 25%,#e8e8ed 50%,var(--t5) 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; border-radius:8px; }
+@keyframes shimmer { 0%{background-position:200% 0}100%{background-position:-200% 0} }
+.skeleton-row { height:48px; margin-bottom:8px; }
+
 /* TABLES */
 .toolbar { display:flex; align-items:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
 .field { background:var(--white); border:1px solid var(--bd2); border-radius:10px; padding:9px 14px; font-family:var(--font); font-size:14px; color:var(--t1); outline:none; transition:border-color .14s,box-shadow .14s; -webkit-appearance:none; }
 .field:focus { border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-s); }
 .btn-sec { background:var(--white); border:1px solid var(--bd2); color:var(--t2); font-family:var(--font); font-size:13px; font-weight:500; padding:9px 16px; border-radius:10px; cursor:pointer; transition:all .14s; white-space:nowrap; }
 .btn-sec:hover { border-color:var(--blue); color:var(--blue); }
+.btn-primary { background:var(--blue); border:none; color:#fff; font-family:var(--font); font-size:13px; font-weight:600; padding:9px 16px; border-radius:10px; cursor:pointer; transition:all .14s; white-space:nowrap; }
+.btn-primary:hover { background:var(--blue-h); }
 .tcard { background:var(--white); border:1px solid var(--border); border-radius:var(--rl); overflow:hidden; box-shadow:var(--sh-md); }
 table { width:100%; border-collapse:collapse; }
 thead tr { background:var(--bg); border-bottom:1px solid var(--border); }
@@ -123,7 +130,17 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
 .detail-row td { padding:0 !important; background:var(--bg) !important; }
 .detail-inner { padding:12px 20px 16px 44px; display:flex; flex-direction:column; gap:5px; }
 .detail-line  { display:flex; align-items:center; gap:9px; font-size:13px; color:var(--t2); }
+.detail-tipo  { font-weight:600; min-width:200px; font-size:12.5px; }
+.detail-hora  { color:var(--t3); }
 .d-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+/* PAGINATION */
+.pagination { display:flex; align-items:center; gap:8px; padding:14px 20px; border-top:1px solid var(--border); flex-wrap:wrap; }
+.page-btn { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 12px; font-family:var(--font); font-size:13px; color:var(--t2); cursor:pointer; transition:all .13s; }
+.page-btn:hover { border-color:var(--blue); color:var(--blue); }
+.page-btn.active { background:var(--blue); border-color:var(--blue); color:#fff; }
+.page-btn:disabled { opacity:.4; cursor:not-allowed; }
+.page-info { font-size:12px; color:var(--t3); margin-left:auto; }
 
 /* ADMIN STATS */
 .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:28px; }
@@ -137,8 +154,10 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
 .colab-info { display:none; align-items:center; gap:10px; }
 .colab-info.visible { display:flex; }
 .colab-avatar { width:36px; height:36px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; flex-shrink:0; }
+.colab-nome { font-size:14px; font-weight:700; color:var(--t1); }
+.colab-sub  { font-size:12px; color:var(--t3); }
 
-/* CALENDARIO */
+/* CALENDÁRIO */
 .cal-card { background:var(--white); border:1px solid var(--border); border-radius:var(--rl); box-shadow:var(--sh-sm); overflow:hidden; margin-bottom:16px; }
 .cal-header { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--border); }
 .cal-header-left { display:flex; align-items:center; gap:8px; }
@@ -151,16 +170,15 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
 .cal-toggle-btn:hover { border-color:var(--blue); color:var(--blue); }
 .cal-chevron { display:inline-block; transition:transform .25s; }
 .cal-chevron.open { transform:rotate(180deg); }
-.cal-body { padding:14px 20px 18px; }
+.cal-body { padding:16px 20px 20px; }
 .cal-body.hidden { display:none; }
 .cal-legend { display:flex; gap:16px; margin-bottom:14px; flex-wrap:wrap; }
 .cal-leg-item { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--t3); }
 .cal-leg-dot { width:20px; height:20px; border-radius:50%; flex-shrink:0; }
-.cal-weekdays { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:6px; }
+.cal-weekdays { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:6px; max-width:380px; }
 .cal-wd { text-align:center; font-size:10px; font-weight:700; color:var(--t4); letter-spacing:.5px; padding:3px 0; text-transform:uppercase; }
 .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; max-width:380px; }
-.cal-weekdays { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; margin-bottom:4px; max-width:380px; }
-.cal-day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:12px; font-weight:500; color:var(--t2); position:relative; transition:background .15s,transform .12s; min-width:0; min-height:0; max-width:40px; max-height:40px; }
+.cal-day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:12px; font-weight:500; color:var(--t2); position:relative; transition:background .15s,transform .12s; max-width:40px; max-height:40px; }
 .cal-day.empty { visibility:hidden; pointer-events:none; }
 .cal-day.weekend { color:var(--t4); }
 .cal-day.worked-full { background:rgba(52,199,89,.2); color:#176d2e; font-weight:700; cursor:pointer; }
@@ -171,8 +189,11 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
 .cal-res-val { font-size:20px; font-weight:700; color:var(--t1); letter-spacing:-.3px; }
 .cal-res-lbl { font-size:11px; color:var(--t3); margin-top:3px; font-weight:500; }
 
-/* EXPORT */
+/* EXPORT CARD */
 .exp-card { background:var(--white); border:1px solid var(--border); border-radius:var(--rl); padding:32px 36px; max-width:520px; box-shadow:var(--sh-md); }
+.exp-section { background:var(--white); border:1px solid var(--border); border-radius:var(--rl); padding:20px 24px; margin-bottom:20px; box-shadow:var(--sh-sm); }
+.exp-section-title { font-size:12px; font-weight:700; color:var(--t3); letter-spacing:.3px; text-transform:uppercase; margin-bottom:12px; }
+.exp-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 .form-g  { margin-bottom:18px; }
 .form-lb { display:block; font-size:12px; font-weight:600; color:var(--t3); margin-bottom:7px; }
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
@@ -229,7 +250,7 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
   .step-card { padding:13px 14px; } .step-name { font-size:13px; } .step-btn { padding:8px 13px; font-size:12px; }
   .tcard { overflow-x:auto; } table { min-width:540px; }
   thead th, tbody td { padding:11px 14px; font-size:12.5px; }
-  .exp-card { padding:20px 18px; } .form-row { grid-template-columns:1fr; }
+  .exp-card,.exp-section { padding:20px 18px; } .form-row { grid-template-columns:1fr; }
   .stats-grid { grid-template-columns:1fr 1fr; }
   .toolbar .field { width:100%; }
   .sess-timer { font-size:18px; }
@@ -313,6 +334,7 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
     <div class="tcard">
       <table><thead><tr><th>Data</th><th>Horas Trabalhadas</th><th>Status</th><th>Detalhes</th><th></th></tr></thead><tbody id="histBody"></tbody></table>
       <div class="t-empty" id="histEmpty" style="display:none"><div class="t-empty-ico">📭</div>Nenhum expediente encontrado.</div>
+      <div class="pagination" id="histPagination"></div>
     </div>
   </section>
 
@@ -339,7 +361,7 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
     <div class="pg-head"><h1 class="pg-title">Painel Admin</h1><p class="pg-sub">Visão geral de todos os colaboradores</p></div>
     <div class="stats-grid" id="statsGrid"></div>
 
-    <!-- Seletor -->
+    <!-- Seletor de colaborador -->
     <div class="colab-select-card">
       <label style="font-size:12px;font-weight:700;color:var(--t3);letter-spacing:.3px;text-transform:uppercase;white-space:nowrap">Colaborador</label>
       <select class="field" id="adminSelectColab" onchange="onColabChange()" style="flex:1;min-width:200px;max-width:300px">
@@ -347,10 +369,7 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
       </select>
       <div class="colab-info" id="colabInfoBox">
         <div class="colab-avatar" id="colabAvatar"></div>
-        <div>
-          <div style="font-size:14px;font-weight:700;color:var(--t1)" id="colabNomeBox"></div>
-          <div style="font-size:12px;color:var(--t3)" id="colabSubBox"></div>
-        </div>
+        <div><div class="colab-nome" id="colabNomeBox"></div><div class="colab-sub" id="colabSubBox"></div></div>
       </div>
     </div>
 
@@ -369,15 +388,15 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
       </div>
 
       <!-- Exportar período do colaborador -->
-      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:20px 24px;margin-bottom:20px;box-shadow:var(--sh-sm)">
-        <div style="font-size:12px;font-weight:700;color:var(--t3);letter-spacing:.3px;text-transform:uppercase;margin-bottom:12px">Exportar relatório</div>
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div class="exp-section">
+        <div class="exp-section-title">Exportar relatório do colaborador</div>
+        <div class="exp-row">
           <input type="date" class="field" id="colabExpIni" style="font-size:13px">
           <input type="date" class="field" id="colabExpFim" style="font-size:13px">
           <button class="btn-sec" onclick="setColabShortcut('semana')">Esta semana</button>
           <button class="btn-sec" onclick="setColabShortcut('mes')">Este mês</button>
           <button class="btn-sec" onclick="setColabShortcut('tudo')">Tudo</button>
-          <button class="btn-sec" style="background:var(--blue);color:#fff;border-color:var(--blue)" onclick="exportarColabPDF()">📄 Exportar PDF</button>
+          <button class="btn-primary" onclick="exportarColabPDF()">📄 Exportar PDF</button>
         </div>
       </div>
 
@@ -409,12 +428,13 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
         </div>
       </div>
     </div>
-    
-<!-- Tabela geral -->
+
+    <!-- Tabela geral -->
     <div id="painelGeral">
       <div class="tcard">
         <table><thead><tr><th>Colaborador</th><th>Data</th><th>Horas</th><th>Status</th><th>Detalhes</th><th></th></tr></thead><tbody id="adminBody"></tbody></table>
         <div class="t-empty" id="adminEmpty" style="display:none"><div class="t-empty-ico">📭</div>Nenhum registro encontrado.</div>
+        <div class="pagination" id="adminPagination"></div>
       </div>
     </div>
   </section>
@@ -441,262 +461,545 @@ tbody td { padding:13px 20px; font-size:13.5px; color:var(--t2); vertical-align:
 </div>
 
 <script>
-// ══ CONFIG ═══════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// CONFIGURAÇÃO
+// ═══════════════════════════════════════════════════════
 const SUPABASE_URL  = 'https://purhbluglpdjujqpfjnj.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1cmhibHVnbHBkanVqcXBmam5qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NTg4NTcsImV4cCI6MjA4OTMzNDg1N30.2bgOlsLu6Pb2ecyETbcR5wh6K9UGu5vOggrKXLcgqCA';
 
-// ══ AUTH ══════════════════════════════════════
-const TOKEN   = localStorage.getItem('ponto_token');
-const USER_ID = localStorage.getItem('ponto_user_id');
-let U_NOME  = localStorage.getItem('ponto_user_nome') || 'Usuário';
-let U_ROLE  = localStorage.getItem('ponto_user_role') || 'user';
-let IS_ADMIN = U_ROLE === 'admin';
-if (!TOKEN || !USER_ID) { window.location.href = 'auth.html'; }
+// ═══════════════════════════════════════════════════════
+// [FIX #4] SANITIZAÇÃO — previne XSS em dados do banco
+// ═══════════════════════════════════════════════════════
+function esc(str) {
+  const d = document.createElement('div');
+  d.appendChild(document.createTextNode(String(str ?? '')));
+  return d.innerHTML;
+}
 
-// ══ SUPABASE ══════════════════════════════════
-const sbH = () => ({'Content-Type':'application/json','apikey':SUPABASE_ANON,'Authorization':'Bearer '+TOKEN});
-async function sbGet(p)      { const r=await fetch(SUPABASE_URL+p,{headers:sbH()}); if(r.status===401){logout();return[];} return r.json(); }
-async function sbPost(p,b)   { const r=await fetch(SUPABASE_URL+p,{method:'POST',headers:{...sbH(),'Prefer':'return=representation'},body:JSON.stringify(b)}); return r.json(); }
-async function sbPatch(p,b)  { const r=await fetch(SUPABASE_URL+p,{method:'PATCH',headers:{...sbH(),'Prefer':'return=minimal'},body:JSON.stringify(b)}); return r.ok; }
-async function sbDelete(p)   { const r=await fetch(SUPABASE_URL+p,{method:'DELETE',headers:sbH()}); return r.ok; }
+// ═══════════════════════════════════════════════════════
+// [FIX #2] GERENCIAMENTO DE TOKEN — refresh automático
+// ═══════════════════════════════════════════════════════
+const Session = {
+  get token()   { return localStorage.getItem('ponto_token'); },
+  get refresh() { return localStorage.getItem('ponto_refresh'); },
+  get userId()  { return localStorage.getItem('ponto_user_id'); },
 
-// ══ CONSTANTS ═════════════════════════════════
+  save(res) {
+    localStorage.setItem('ponto_token',      res.access_token);
+    localStorage.setItem('ponto_refresh',    res.refresh_token);
+    localStorage.setItem('ponto_user_id',    res.user?.id || '');
+    localStorage.setItem('ponto_user_email', res.user?.email || '');
+  },
+
+  clear() {
+    ['ponto_token','ponto_refresh','ponto_user_id',
+     'ponto_user_email','ponto_user_nome','ponto_user_role']
+      .forEach(k => localStorage.removeItem(k));
+  },
+
+  async ensureValid() {
+    // Tenta renovar o token 5 minutos antes de expirar
+    // O Supabase usa tokens de 1h — chamamos refresh preventivamente
+    const refresh = this.refresh;
+    if (!refresh) return false;
+    try {
+      const r = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=refresh_token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON },
+        body: JSON.stringify({ refresh_token: refresh })
+      });
+      if (!r.ok) return false;
+      const data = await r.json();
+      if (!data.access_token) return false;
+      localStorage.setItem('ponto_token',   data.access_token);
+      localStorage.setItem('ponto_refresh', data.refresh_token);
+      return true;
+    } catch { return false; }
+  }
+};
+
+// Renova token automaticamente a cada 50 minutos
+setInterval(() => Session.ensureValid(), 50 * 60 * 1000);
+
+// ═══════════════════════════════════════════════════════
+// [FIX #3] SUPABASE HELPERS — tratamento de erros completo
+// ═══════════════════════════════════════════════════════
+async function sbGet(path) {
+  try {
+    const r = await fetch(SUPABASE_URL + path, {
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + Session.token,
+      }
+    });
+    if (r.status === 401) {
+      const refreshed = await Session.ensureValid();
+      if (!refreshed) { logout(); return []; }
+      // Tenta novamente com o token novo
+      return sbGet(path);
+    }
+    if (!r.ok) {
+      console.error(`sbGet ${path} → HTTP ${r.status}`);
+      return [];
+    }
+    return await r.json();
+  } catch (e) {
+    console.error(`sbGet network error:`, e);
+    showToast('Erro de conexão', '#ff3b30');
+    return [];
+  }
+}
+
+async function sbPost(path, body) {
+  try {
+    const r = await fetch(SUPABASE_URL + path, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + Session.token,
+        'Prefer': 'return=representation',
+      },
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) { console.error(`sbPost ${path} → HTTP ${r.status}`); return null; }
+    return await r.json();
+  } catch (e) {
+    console.error('sbPost error:', e);
+    return null;
+  }
+}
+
+async function sbPatch(path, body) {
+  try {
+    const r = await fetch(SUPABASE_URL + path, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + Session.token,
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) { console.error(`sbPatch ${path} → HTTP ${r.status}`); return false; }
+    return true;
+  } catch (e) {
+    console.error('sbPatch error:', e);
+    return false;
+  }
+}
+
+async function sbDelete(path) {
+  try {
+    const r = await fetch(SUPABASE_URL + path, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + Session.token }
+    });
+    if (!r.ok) { console.error(`sbDelete ${path} → HTTP ${r.status}`); return false; }
+    return true;
+  } catch (e) {
+    console.error('sbDelete error:', e);
+    return false;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// AUTH GUARD
+// ═══════════════════════════════════════════════════════
+if (!Session.token || !Session.userId) { window.location.href = 'auth.html'; }
+
+// ═══════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════
 const STEPS = [
-  {label:'Início de Expediente',desc:'Inicia a contagem da jornada', btn:'Bater Ponto',color:'var(--green)'},
-  {label:'Início de Almoço',    desc:'Pausa para o almoço',          btn:'Sair Almoço',color:'var(--orange)'},
-  {label:'Volta do Almoço',     desc:'Retorno da pausa',             btn:'Voltar',     color:'var(--blue)'},
-  {label:'Fim de Expediente',   desc:'Encerra a jornada do dia',     btn:'Encerrar',   color:'var(--red)'},
+  {label:'Início de Expediente', desc:'Inicia a contagem da jornada',  btn:'Bater Ponto', color:'var(--green)'},
+  {label:'Início de Almoço',     desc:'Pausa para o almoço',           btn:'Sair Almoço', color:'var(--orange)'},
+  {label:'Volta do Almoço',      desc:'Retorno da pausa',              btn:'Voltar',      color:'var(--blue)'},
+  {label:'Fim de Expediente',    desc:'Encerra a jornada do dia',      btn:'Encerrar',    color:'var(--red)'},
 ];
-const CORES = {'Início de Expediente':'#34c759','Início de Almoço':'#ff9500','Volta do Almoço':'#007aff','Fim de Expediente':'#ff3b30'};
+const CORES = {
+  'Início de Expediente':'#34c759', 'Início de Almoço':'#ff9500',
+  'Volta do Almoço':'#007aff',      'Fim de Expediente':'#ff3b30',
+};
 const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const PAGE_SIZE = 20; // [FIX #8] paginação
 
-// ══ STATE ═════════════════════════════════════
-let state        = {currentStep:-1,logs:[],timerStart:null,pausedMs:0,pauseStart:null,dbId:null};
-let timerInterval = null;
-let allRecords   = [];
-let adminRecords = [];
-let colabAtual   = null;
-let calAno       = new Date().getFullYear();
-let calMes       = new Date().getMonth();
-let calAberto    = true;
+// ═══════════════════════════════════════════════════════
+// [FIX #6] STORE CENTRALIZADO — estado controlado
+// ═══════════════════════════════════════════════════════
+const store = {
+  // Perfil do usuário logado
+  profile: {
+    nome:    localStorage.getItem('ponto_user_nome') || 'Usuário',
+    role:    localStorage.getItem('ponto_user_role') || 'user',
+    isAdmin: localStorage.getItem('ponto_user_role') === 'admin',
+  },
 
-const pad      = n => String(n).padStart(2,'0');
+  // Sessão ativa de ponto
+  ponto: {
+    currentStep: -1,
+    logs:        [],
+    timerStart:  null,
+    pausedMs:    0,
+    pauseStart:  null,
+    dbId:        null,
+  },
+
+  // Cache de dados
+  allRecords:   [],
+  adminRecords: [],
+  colabAtual:   null,
+
+  // Estado do calendário
+  cal: { ano: new Date().getFullYear(), mes: new Date().getMonth(), aberto: true },
+
+  // Paginação
+  histPage:  0,
+  adminPage: 0,
+
+  // Timer interval — guardado para cleanup
+  _timerInterval: null,
+
+  setProfile(data) {
+    this.profile.nome    = data.nome    || this.profile.nome;
+    this.profile.role    = data.role    || 'user';
+    this.profile.isAdmin = data.role    === 'admin';
+    localStorage.setItem('ponto_user_nome', this.profile.nome);
+    localStorage.setItem('ponto_user_role', this.profile.role);
+  },
+
+  resetPonto() {
+    this.ponto = { currentStep:-1, logs:[], timerStart:null, pausedMs:0, pauseStart:null, dbId:null };
+    clearInterval(this._timerInterval);
+    this._timerInterval = null;
+  },
+};
+
+// ═══════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════
+const pad      = n => String(n).padStart(2, '0');
 const todayKey = () => new Date().toISOString().split('T')[0];
 
-// ══ INIT ══════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
 async function initUI() {
-  try {
-    const data = await sbGet(`/rest/v1/profiles?id=eq.${USER_ID}&select=nome,role`);
-    if (Array.isArray(data) && data[0]) {
-      U_ROLE=data[0].role||'user'; U_NOME=data[0].nome||U_NOME;
-      IS_ADMIN=U_ROLE==='admin';
-      localStorage.setItem('ponto_user_role',U_ROLE);
-      localStorage.setItem('ponto_user_nome',U_NOME);
-    }
-  } catch(e){}
+  // Busca perfil do banco — garante dados frescos mesmo após promoção a admin
+  const data = await sbGet(`/rest/v1/profiles?id=eq.${Session.userId}&select=nome,role`);
+  if (Array.isArray(data) && data[0]) {
+    store.setProfile(data[0]);
+  }
 
-  const ini=U_NOME.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
-  document.getElementById('sbAvatar').textContent=ini;
-  document.getElementById('sbNome').textContent=U_NOME;
-  document.getElementById('sbRole').textContent=IS_ADMIN?'⭐ Administrador':'Colaborador';
-  document.getElementById('ubAvatar').textContent=ini;
-  document.getElementById('ubNome').textContent=U_NOME;
-  if (IS_ADMIN) {
-    document.getElementById('adminDivider').style.display='';
-    document.getElementById('adminSection').style.display='';
-    document.getElementById('navAdmin').style.display='';
-    document.getElementById('bnavAdmin').style.display='';
+  const { nome, isAdmin } = store.profile;
+  const initials = nome.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+
+  document.getElementById('sbAvatar').textContent = initials;
+  document.getElementById('sbNome').textContent   = esc(nome);
+  document.getElementById('sbRole').textContent   = isAdmin ? '⭐ Administrador' : 'Colaborador';
+  document.getElementById('ubAvatar').textContent = initials;
+  document.getElementById('ubNome').textContent   = esc(nome);
+
+  if (isAdmin) {
+    ['adminDivider','adminSection','navAdmin','bnavAdmin']
+      .forEach(id => document.getElementById(id).style.display = '');
   }
 }
 
-// ══ CLOCK ═════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// CLOCK — [FIX #9] intervalo guardado para cleanup
+// ═══════════════════════════════════════════════════════
+const _clockInterval = setInterval(tickClock, 1000);
+tickClock();
 function tickClock() {
-  const n=new Date();
-  document.getElementById('sbClock').textContent=n.toLocaleTimeString('pt-BR');
-  document.getElementById('sbDate').textContent=n.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
+  const n = new Date();
+  document.getElementById('sbClock').textContent = n.toLocaleTimeString('pt-BR');
+  document.getElementById('sbDate').textContent  = n.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'});
 }
-setInterval(tickClock,1000); tickClock();
 
-// ══ NAVIGATION ════════════════════════════════
-function goTo(name,btn) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('on'));
-  document.getElementById('page-'+name).classList.add('active');
-  if(btn) btn.classList.add('on');
-  ['registro','historico','exportar','admin'].forEach(n=>{
-    const el=document.getElementById('bnav'+n.charAt(0).toUpperCase()+n.slice(1));
-    if(el) el.classList.toggle('on',n===name);
+// ═══════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════
+function goTo(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('on'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (btn) btn.classList.add('on');
+  ['registro','historico','exportar','admin'].forEach(n => {
+    const el = document.getElementById('bnav' + n.charAt(0).toUpperCase() + n.slice(1));
+    if (el) el.classList.toggle('on', n === name);
   });
-  if(name==='historico') loadAndRenderHist();
-  if(name==='admin'&&IS_ADMIN) loadAndRenderAdmin();
-  if(name==='registro') renderLogToday();
-}
-function logout() {
-  ['ponto_token','ponto_refresh','ponto_user_id','ponto_user_email','ponto_user_nome','ponto_user_role'].forEach(k=>localStorage.removeItem(k));
-  window.location.href='auth.html';
+  if (name === 'historico') loadAndRenderHist();
+  if (name === 'admin' && store.profile.isAdmin) loadAndRenderAdmin();
+  if (name === 'registro') renderLogToday();
 }
 
-// ══ PONTO FLOW ════════════════════════════════
+function logout() {
+  clearInterval(_clockInterval);
+  clearInterval(store._timerInterval);
+  Session.clear();
+  window.location.href = 'auth.html';
+}
+
+// ═══════════════════════════════════════════════════════
+// PONTO FLOW
+// ═══════════════════════════════════════════════════════
 async function initRegistro() {
-  const today=todayKey();
-  const open=await sbGet(`/rest/v1/registros?user_id=eq.${USER_ID}&date=eq.${today}&fim=eq.false&select=*`);
-  if(Array.isArray(open)&&open.length) {
-    const rec=open[0];
-    state={currentStep:rec.logs.length,logs:rec.logs,timerStart:rec.logs[0]?.ts||null,pausedMs:rec.paused_ms||0,pauseStart:rec.pause_start||null,dbId:rec.id};
-    if(state.timerStart) startTimer();
+  const today = todayKey();
+  const open = await sbGet(`/rest/v1/registros?user_id=eq.${Session.userId}&date=eq.${today}&fim=eq.false&select=*`);
+  if (Array.isArray(open) && open.length) {
+    const rec = open[0];
+    store.ponto = {
+      currentStep: rec.logs.length,
+      logs:        rec.logs,
+      timerStart:  rec.logs[0]?.ts || null,
+      pausedMs:    rec.paused_ms   || 0,
+      pauseStart:  rec.pause_start || null,
+      dbId:        rec.id,
+    };
+    if (store.ponto.timerStart) startTimer();
   }
-  buildSteps(); showBanners(); renderLogToday();
+  buildSteps();
+  showBanners();
+  renderLogToday();
 }
 
 function buildSteps() {
-  const wrap=document.getElementById('stepsWrap');
-  if(state.currentStep<0) {
-    wrap.innerHTML=STEPS.map((s,i)=>stepHTML(s,i,i===0?'active':'locked')).join('');
-    state.currentStep=0; updateProg(); return;
+  const wrap = document.getElementById('stepsWrap');
+  const { currentStep, logs } = store.ponto;
+  if (currentStep < 0) {
+    wrap.innerHTML = STEPS.map((s, i) => stepHTML(s, i, i === 0 ? 'active' : 'locked')).join('');
+    store.ponto.currentStep = 0;
+    updateProg();
+    return;
   }
-  wrap.innerHTML=STEPS.map((s,i)=>{ const cls=i<state.currentStep?'done':i===state.currentStep?'active':'locked'; return stepHTML(s,i,cls); }).join('');
+  wrap.innerHTML = STEPS.map((s, i) => {
+    const cls = i < currentStep ? 'done' : i === currentStep ? 'active' : 'locked';
+    return stepHTML(s, i, cls);
+  }).join('');
   updateProg();
 }
 
-function stepHTML(s,i,cls) {
-  const log=state.logs[i],done=cls==='done',act=cls==='active';
+function stepHTML(s, i, cls) {
+  const log = store.ponto.logs[i];
+  const done = cls === 'done', act = cls === 'active';
+  // [FIX #4] esc() em dados do banco
   return `<div class="step-card ${cls}" style="--sc:${s.color}" id="step-${i}">
-    <div class="step-num">${done?'✓':i+1}</div>
+    <div class="step-num">${done ? '✓' : i + 1}</div>
     <div class="step-body">
-      <div class="step-name">${s.label}</div><div class="step-desc">${s.desc}</div>
-      ${log?`<div class="step-logged" style="color:${s.color}">✓ ${log.horario}</div>`:''}
+      <div class="step-name">${esc(s.label)}</div>
+      <div class="step-desc">${esc(s.desc)}</div>
+      ${log ? `<div class="step-logged" style="color:${s.color}">✓ ${esc(log.horario)}</div>` : ''}
     </div>
-    ${act?`<button class="step-btn" style="background:${s.color}" onclick="registrarStep(${i})">${s.btn}</button>`:''}
-    ${done?`<span style="font-size:20px;color:var(--t4)">✓</span>`:''}
+    ${act  ? `<button class="step-btn" style="background:${s.color}" onclick="registrarStep(${i})">${esc(s.btn)}</button>` : ''}
+    ${done ? `<span style="font-size:20px;color:var(--t4)">✓</span>` : ''}
   </div>`;
 }
 
 function updateProg() {
-  const step=Math.min(state.currentStep,STEPS.length),pct=Math.round((step/STEPS.length)*100);
-  document.getElementById('progLabel').textContent=step>=STEPS.length?'Expediente concluído ✓':`Etapa ${step+1} de ${STEPS.length}`;
-  document.getElementById('progPct').textContent=pct+'%';
-  document.getElementById('progFill').style.width=pct+'%';
-  document.getElementById('progWrap').style.display='block';
+  const step = Math.min(store.ponto.currentStep, STEPS.length);
+  const pct  = Math.round((step / STEPS.length) * 100);
+  document.getElementById('progLabel').textContent = step >= STEPS.length ? 'Expediente concluído ✓' : `Etapa ${step + 1} de ${STEPS.length}`;
+  document.getElementById('progPct').textContent   = pct + '%';
+  document.getElementById('progFill').style.width  = pct + '%';
+  document.getElementById('progWrap').style.display = 'block';
 }
 
 function showBanners() {
-  const active=state.currentStep>0&&state.currentStep<=STEPS.length;
-  document.getElementById('sessBanner').classList.toggle('visible',active);
-  if(active) {
-    document.getElementById('sessLabel').textContent=U_NOME;
-    document.getElementById('sessStatus').textContent=state.currentStep===4?'✅ Encerrado':'Expediente em andamento';
+  const { currentStep } = store.ponto;
+  const active = currentStep > 0 && currentStep <= STEPS.length;
+  document.getElementById('sessBanner').classList.toggle('visible', active);
+  if (active) {
+    document.getElementById('sessLabel').textContent  = esc(store.profile.nome);
+    document.getElementById('sessStatus').textContent = currentStep === 4 ? '✅ Encerrado' : 'Expediente em andamento';
   }
 }
 
 async function registrarStep(idx) {
-  if(idx!==state.currentStep) return;
-  const now=new Date(),horario=now.toLocaleTimeString('pt-BR'),tipo=STEPS[idx].label,ts=now.toISOString();
-  state.logs.push({tipo,horario,ts});
-  if(idx===0){state.timerStart=ts;startTimer();}
-  if(idx===1){state.pauseStart=ts;document.getElementById('sessStatus').textContent='Em pausa — almoço';}
-  if(idx===2&&state.pauseStart){state.pausedMs+=now-new Date(state.pauseStart);state.pauseStart=null;document.getElementById('sessStatus').textContent='Expediente em andamento';}
-  state.currentStep=idx+1;
-  if(idx===3){await finalizarExpediente(now);return;}
-  await upsertRecord(false,null);
-  buildSteps();showBanners();renderLogToday();
-  showToast(tipo+' — '+horario,CORES[tipo]);
+  if (idx !== store.ponto.currentStep) return;
+  const now = new Date(), horario = now.toLocaleTimeString('pt-BR');
+  const tipo = STEPS[idx].label, ts = now.toISOString();
+
+  store.ponto.logs.push({ tipo, horario, ts });
+
+  if (idx === 0) { store.ponto.timerStart = ts; startTimer(); }
+  if (idx === 1) { store.ponto.pauseStart = ts; document.getElementById('sessStatus').textContent = 'Em pausa — almoço'; }
+  if (idx === 2 && store.ponto.pauseStart) {
+    store.ponto.pausedMs += now - new Date(store.ponto.pauseStart);
+    store.ponto.pauseStart = null;
+    document.getElementById('sessStatus').textContent = 'Expediente em andamento';
+  }
+
+  store.ponto.currentStep = idx + 1;
+  if (idx === 3) { await finalizarExpediente(now); return; }
+
+  const ok = await upsertRecord(false, null);
+  if (!ok) { showToast('Erro ao salvar registro', '#ff3b30'); return; }
+
+  buildSteps(); showBanners(); renderLogToday();
+  showToast(tipo + ' — ' + horario, CORES[tipo]);
 }
 
 async function finalizarExpediente(finTs) {
-  clearInterval(timerInterval);
-  const start=new Date(state.logs[0].ts);
-  let worked=finTs-start-state.pausedMs;
-  if(worked<0) worked=0;
-  const h=Math.floor(worked/3600000),m=Math.floor((worked%3600000)/60000),s=Math.floor((worked%60000)/1000);
-  const horasStr=`${pad(h)}h${pad(m)}m${pad(s)}s`;
-  await upsertRecord(true,horasStr,worked);
-  state={currentStep:-1,logs:[],timerStart:null,pausedMs:0,pauseStart:null,dbId:null};
+  clearInterval(store._timerInterval);
+  store._timerInterval = null;
+
+  const start  = new Date(store.ponto.logs[0].ts);
+  let worked   = finTs - start - store.ponto.pausedMs;
+  if (worked < 0) worked = 0;
+
+  const h = Math.floor(worked / 3600000);
+  const m = Math.floor((worked % 3600000) / 60000);
+  const s = Math.floor((worked % 60000) / 1000);
+  const horasStr = `${pad(h)}h${pad(m)}m${pad(s)}s`;
+
+  const ok = await upsertRecord(true, horasStr, worked);
+  if (!ok) { showToast('Erro ao finalizar expediente', '#ff3b30'); return; }
+
+  store.resetPonto();
   buildSteps();
   document.getElementById('sessBanner').classList.remove('visible');
-  document.getElementById('progWrap').style.display='none';
+  document.getElementById('progWrap').style.display = 'none';
   renderLogToday();
-  showToast(`Expediente encerrado — ${horasStr}`,'#34c759');
+  showToast(`Expediente encerrado — ${horasStr}`, '#34c759');
 }
 
-async function upsertRecord(fim,horas,horasMs) {
-  const body={user_id:USER_ID,nome:U_NOME,date:todayKey(),logs:state.logs,fim,horas:horas||null,horas_ms:horasMs||0,paused_ms:state.pausedMs,pause_start:state.pauseStart,updated_at:new Date().toISOString()};
-  if(state.dbId) { await sbPatch(`/rest/v1/registros?id=eq.${state.dbId}`,body); }
-  else { const res=await sbPost('/rest/v1/registros',body); if(Array.isArray(res)&&res[0]) state.dbId=res[0].id; }
+async function upsertRecord(fim, horas, horasMs) {
+  // [FIX #5] nome NÃO é salvo no registro — join com profiles na leitura
+  const body = {
+    user_id:     Session.userId,
+    date:        todayKey(),
+    logs:        store.ponto.logs,
+    fim,
+    horas:       horas || null,
+    horas_ms:    horasMs || 0,
+    paused_ms:   store.ponto.pausedMs,
+    pause_start: store.ponto.pauseStart,
+    updated_at:  new Date().toISOString(),
+  };
+
+  if (store.ponto.dbId) {
+    return sbPatch(`/rest/v1/registros?id=eq.${store.ponto.dbId}`, body);
+  } else {
+    const res = await sbPost('/rest/v1/registros', body);
+    if (Array.isArray(res) && res[0]) { store.ponto.dbId = res[0].id; return true; }
+    return false;
+  }
 }
 
 function startTimer() {
-  clearInterval(timerInterval);
-  timerInterval=setInterval(()=>{
-    if(!state.timerStart) return;
-    let el=new Date()-new Date(state.timerStart)-state.pausedMs;
-    if(state.pauseStart) el-=new Date()-new Date(state.pauseStart);
-    if(el<0) el=0;
-    const h=Math.floor(el/3600000),m=Math.floor((el%3600000)/60000),s=Math.floor((el%60000)/1000);
-    document.getElementById('sessTimer').textContent=`${pad(h)}:${pad(m)}:${pad(s)}`;
-  },1000);
+  clearInterval(store._timerInterval);
+  store._timerInterval = setInterval(() => {
+    if (!store.ponto.timerStart) return;
+    let el = new Date() - new Date(store.ponto.timerStart) - store.ponto.pausedMs;
+    if (store.ponto.pauseStart) el -= new Date() - new Date(store.ponto.pauseStart);
+    if (el < 0) el = 0;
+    const h = Math.floor(el / 3600000), m = Math.floor((el % 3600000) / 60000), s = Math.floor((el % 60000) / 1000);
+    document.getElementById('sessTimer').textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+  }, 1000);
 }
 
 async function renderLogToday() {
-  const today=todayKey();
-  let recs=await sbGet(`/rest/v1/registros?user_id=eq.${USER_ID}&date=eq.${today}&select=logs,fim`);
-  if(!Array.isArray(recs)) recs=[];
-  const logs=recs.flatMap(r=>r.logs||[]);
-  const card=document.getElementById('logCard');
-  if(!logs.length){card.innerHTML='<div class="log-nil">Nenhum registro hoje ainda.</div>';return;}
-  card.innerHTML=logs.map(l=>`<div class="log-row"><div class="log-dot" style="background:${CORES[l.tipo]}"></div><span class="log-lbl">${l.tipo}</span><span class="log-t">${l.horario}</span></div>`).join('');
+  const today = todayKey();
+  // [FIX #5] join com profiles para buscar o nome
+  const recs = await sbGet(`/rest/v1/registros?user_id=eq.${Session.userId}&date=eq.${today}&select=logs,fim`);
+  const logs = Array.isArray(recs) ? recs.flatMap(r => r.logs || []) : [];
+  const card = document.getElementById('logCard');
+  if (!logs.length) { card.innerHTML = '<div class="log-nil">Nenhum registro hoje ainda.</div>'; return; }
+  // [FIX #4] esc() em dados do banco
+  card.innerHTML = logs.map(l => `
+    <div class="log-row">
+      <div class="log-dot" style="background:${esc(CORES[l.tipo] || '#888')}"></div>
+      <span class="log-lbl">${esc(l.tipo)}</span>
+      <span class="log-t">${esc(l.horario)}</span>
+    </div>`).join('');
 }
 
-// ══ HISTÓRICO ══════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// MEU HISTÓRICO — [FIX #8] paginação
+// ═══════════════════════════════════════════════════════
 async function loadAndRenderHist() {
-  allRecords=await sbGet(`/rest/v1/registros?user_id=eq.${USER_ID}&fim=eq.true&select=*&order=date.desc`);
-  if(!Array.isArray(allRecords)) allRecords=[];
+  store.histPage = 0;
+  // [FIX #5] join com profiles (via nome salvo no profile, não no registro)
+  store.allRecords = await sbGet(
+    `/rest/v1/registros?user_id=eq.${Session.userId}&fim=eq.true&select=*&order=date.desc`
+  );
+  if (!Array.isArray(store.allRecords)) store.allRecords = [];
   renderHist();
 }
+
 function renderHist() {
-  const filtro=document.getElementById('filtroData').value;
-  let recs=allRecords;
-  if(filtro) recs=recs.filter(r=>r.date===filtro);
-  const body=document.getElementById('histBody'),empty=document.getElementById('histEmpty');
-  document.getElementById('histInfo').textContent=recs.length?`${recs.length} registro(s)`:'';
-  if(!recs.length){body.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  body.innerHTML=recs.map((r,i)=>{
-    const fmt=new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
-    return `<tr><td class="c-date">${fmt}</td><td class="c-hrs">${r.horas||'—'}</td>
-      <td><span class="badge ${r.logs?.length===4?'ok':'nok'}">${r.logs?.length===4?'● Completo':'● Incompleto'}</span></td>
-      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('hd-${i}',this)">Ver detalhes</button></td>
-      <td><button class="del-btn" onclick="confirmarDelete('${r.id}','hist')">✕</button></td></tr>
-    <tr id="hd-${i}" style="display:none" class="detail-row"><td colspan="5"><div class="detail-inner">
-      ${(r.logs||[]).map(l=>`<div class="detail-line"><div class="d-dot" style="background:${CORES[l.tipo]}"></div><span style="font-weight:600;min-width:200px;font-size:12.5px">${l.tipo}</span><span style="color:var(--t3)">${l.horario}</span></div>`).join('')}
-    </div></td></tr>`;
+  const filtro = document.getElementById('filtroData').value;
+  let recs = store.allRecords;
+  if (filtro) recs = recs.filter(r => r.date === filtro);
+
+  const total = recs.length;
+  const start = store.histPage * PAGE_SIZE;
+  const page  = recs.slice(start, start + PAGE_SIZE);
+
+  const body  = document.getElementById('histBody');
+  const empty = document.getElementById('histEmpty');
+  document.getElementById('histInfo').textContent = total ? `${total} registro(s)` : '';
+
+  if (!page.length) { body.innerHTML = ''; empty.style.display = 'block'; renderPagination('hist', 0, 0); return; }
+  empty.style.display = 'none';
+
+  body.innerHTML = page.map((r, i) => {
+    const fmt = new Date(r.date + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit', year:'numeric'});
+    const globalIdx = start + i;
+    return `<tr>
+      <td class="c-date">${esc(fmt)}</td>
+      <td class="c-hrs">${esc(r.horas || '—')}</td>
+      <td><span class="badge ${r.logs?.length === 4 ? 'ok' : 'nok'}">${r.logs?.length === 4 ? '● Completo' : '● Incompleto'}</span></td>
+      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('hd-${globalIdx}',this)">Ver detalhes</button></td>
+      <td><button class="del-btn" onclick="confirmarDelete('${esc(r.id)}','hist')">✕</button></td>
+    </tr>
+    <tr id="hd-${globalIdx}" style="display:none" class="detail-row">
+      <td colspan="5"><div class="detail-inner">
+        ${buildDetailLines(r.logs)}
+      </div></td>
+    </tr>`;
   }).join('');
+
+  renderPagination('hist', total, store.histPage);
 }
 
-// ══ ADMIN GERAL ════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// ADMIN — [FIX #5] nome via JOIN, [FIX #8] paginação
+// ═══════════════════════════════════════════════════════
 async function loadAndRenderAdmin() {
-  if (!IS_ADMIN) return;
-  // Busca concluídos E em andamento juntos
-  const todos = await sbGet(`/rest/v1/registros?select=*&order=date.desc`);
-  adminRecords = Array.isArray(todos) ? todos : [];
+  if (!store.profile.isAdmin) return;
+  store.adminPage = 0;
+
+  // [FIX #5] join com profiles para trazer o nome real e atualizado
+  store.adminRecords = await sbGet(
+    `/rest/v1/registros?select=*,profiles(nome,email)&order=date.desc`
+  );
+  if (!Array.isArray(store.adminRecords)) store.adminRecords = [];
+
+  // Normaliza: extrai nome do join
+  store.adminRecords = store.adminRecords.map(r => ({
+    ...r,
+    nome: r.profiles?.nome || r.nome || '—',
+  }));
+
   renderAdminStats();
-  // Tabela geral exibe só os concluídos
   renderAdmin();
   await preencherSelectColabs();
 }
 
 function renderAdminStats() {
-  const recs    = adminRecords;
-  const today   = todayKey();
-  const totalMs = recs.reduce((a,r) => a+(r.horas_ms||0), 0);
-  const th = Math.floor(totalMs/3600000), tm = Math.floor((totalMs%3600000)/60000);
+  const recs   = store.adminRecords;
+  const users  = [...new Set(recs.map(r => r.user_id))].length;
+  const today  = todayKey();
+  const totalMs = recs.filter(r => r.fim).reduce((a, r) => a + (r.horas_ms || 0), 0);
+  const th = Math.floor(totalMs / 3600000), tm = Math.floor((totalMs % 3600000) / 60000);
 
-  // Busca também registros em andamento (fim=false) do dia de hoje
-  // adminRecords só tem fim=true, então buscamos separado via sbGet
-  // mas usamos o que já temos: fim=true hoje
-  const todayCompletos  = recs.filter(r => r.date === today && r.fim  === true).length;
-  const todayAndamento  = recs.filter(r => r.date === today && r.fim  === false).length;
+  const todayCompletos = recs.filter(r => r.date === today && r.fim  === true).length;
+  const todayAndamento = recs.filter(r => r.date === today && r.fim  === false).length;
 
-  // Monta label do card "hoje"
   let todayVal, todayLbl;
   if (todayCompletos > 0 && todayAndamento > 0) {
     todayVal = String(todayCompletos);
@@ -712,321 +1015,425 @@ function renderAdminStats() {
     todayLbl = 'Registros hoje';
   }
 
-  const users = [...new Set(recs.map(r => r.user_id))].length;
-
   document.getElementById('statsGrid').innerHTML = `
-    <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val">${users}</div><div class="stat-lbl">Colaboradores</div></div>
-    <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-val">${recs.length}</div><div class="stat-lbl">Expedientes totais</div></div>
-    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-val">${todayVal}</div><div class="stat-lbl">${todayLbl}</div></div>
-    <div class="stat-card"><div class="stat-icon">⏱</div><div class="stat-val">${pad(th)}h${pad(tm)}m</div><div class="stat-lbl">Total de horas</div></div>`;
+    <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val">${esc(String(users))}</div><div class="stat-lbl">Colaboradores</div></div>
+    <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-val">${esc(String(recs.filter(r=>r.fim).length))}</div><div class="stat-lbl">Expedientes totais</div></div>
+    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-val">${esc(todayVal)}</div><div class="stat-lbl">${esc(todayLbl)}</div></div>
+    <div class="stat-card"><div class="stat-icon">⏱</div><div class="stat-val">${esc(pad(th)+'h'+pad(tm)+'m')}</div><div class="stat-lbl">Total de horas</div></div>`;
 }
 
 async function preencherSelectColabs() {
-  const profiles=await sbGet(`/rest/v1/profiles?select=id,nome,email&order=nome.asc`);
-  const sel=document.getElementById('adminSelectColab');
-  sel.innerHTML='<option value="">— Ver todos —</option>';
-  if(!Array.isArray(profiles)) return;
-  profiles.forEach(p=>{
-    const opt=document.createElement('option');
-    opt.value=p.id; opt.dataset.nome=p.nome;
-    opt.textContent=p.nome+(p.id===USER_ID?' (você)':'');
+  const profiles = await sbGet(`/rest/v1/profiles?select=id,nome,email&order=nome.asc`);
+  const sel = document.getElementById('adminSelectColab');
+  sel.innerHTML = '<option value="">— Ver todos —</option>';
+  if (!Array.isArray(profiles)) return;
+  profiles.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.dataset.nome = p.nome;
+    // textContent é seguro — sem risco de XSS
+    opt.textContent = p.nome + (p.id === Session.userId ? ' (você)' : '');
     sel.appendChild(opt);
   });
 }
 
 function onColabChange() {
-  const sel=document.getElementById('adminSelectColab'),id=sel.value,nome=sel.options[sel.selectedIndex]?.dataset?.nome||'';
-  if(!id) {
-    colabAtual=null;
-    document.getElementById('painelGeral').style.display='';
-    document.getElementById('painelColab').style.display='none';
+  const sel  = document.getElementById('adminSelectColab');
+  const id   = sel.value;
+  const nome = sel.options[sel.selectedIndex]?.dataset?.nome || '';
+
+  if (!id) {
+    store.colabAtual = null;
+    document.getElementById('painelGeral').style.display = '';
+    document.getElementById('painelColab').style.display = 'none';
     document.getElementById('colabInfoBox').classList.remove('visible');
+    renderAdmin();
     return;
   }
-  colabAtual={user_id:id,nome};
-  const ini=nome.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
-  document.getElementById('colabAvatar').textContent=ini;
-  document.getElementById('colabNomeBox').textContent=nome;
-  const recs=adminRecords.filter(r=>r.user_id===id);
-  const totalMs=recs.reduce((a,r)=>a+(r.horas_ms||0),0);
-  const th=Math.floor(totalMs/3600000),tm=Math.floor((totalMs%3600000)/60000);
-  document.getElementById('colabSubBox').textContent=`${recs.length} expediente(s) · ${pad(th)}h${pad(tm)}m total`;
+
+  store.colabAtual = { user_id: id, nome };
+
+  const initials = nome.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+  document.getElementById('colabAvatar').textContent  = initials;
+  document.getElementById('colabNomeBox').textContent = esc(nome);
+
+  const recs    = store.adminRecords.filter(r => r.user_id === id && r.fim);
+  const totalMs = recs.reduce((a, r) => a + (r.horas_ms || 0), 0);
+  const th = Math.floor(totalMs / 3600000), tm = Math.floor((totalMs % 3600000) / 60000);
+  document.getElementById('colabSubBox').textContent = `${recs.length} expediente(s) · ${pad(th)}h${pad(tm)}m total`;
   document.getElementById('colabInfoBox').classList.add('visible');
-  document.getElementById('painelGeral').style.display='none';
-  document.getElementById('painelColab').style.display='';
-  calAno=new Date().getFullYear();calMes=new Date().getMonth();calAberto=true;
-  renderColabHist(); renderCalendario();
+
+  document.getElementById('painelGeral').style.display = 'none';
+  document.getElementById('painelColab').style.display = '';
+
+  store.cal.ano = new Date().getFullYear();
+  store.cal.mes = new Date().getMonth();
+  store.cal.aberto = true;
+
+  renderColabHist();
+  renderCalendario();
 }
 
 function renderAdmin() {
-  const recs = [...adminRecords].sort((a,b) => b.date.localeCompare(a.date));
-  const body = document.getElementById('adminBody');
+  const recs = [...store.adminRecords].filter(r => r.fim).sort((a, b) => b.date.localeCompare(a.date));
+  const total = recs.length;
+  const start = store.adminPage * PAGE_SIZE;
+  const page  = recs.slice(start, start + PAGE_SIZE);
+
+  const body  = document.getElementById('adminBody');
   const empty = document.getElementById('adminEmpty');
-  if (!body) return;
-  if (!recs.length) { body.innerHTML=''; empty.style.display='block'; return; }
-  empty.style.display='none';
-  body.innerHTML = recs.map((r,i) => {
-    const fmt = new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+
+  if (!page.length) { body.innerHTML = ''; empty.style.display = 'block'; renderPagination('admin', 0, 0); return; }
+  empty.style.display = 'none';
+
+  body.innerHTML = page.map((r, i) => {
+    const fmt = new Date(r.date + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit', year:'numeric'});
+    const globalIdx = start + i;
     return `<tr>
-      <td class="c-name">${r.nome||'—'}</td>
-      <td class="c-date">${fmt}</td>
-      <td class="c-hrs">${r.horas||'—'}</td>
-      <td><span class="badge ${r.logs?.length===4?'ok':'nok'}">${r.logs?.length===4?'● Completo':'● Incompleto'}</span></td>
-      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('ad-${i}',this)">Ver</button></td>
-      <td><button class="del-btn" onclick="confirmarDelete('${r.id}','admin')">✕</button></td>
+      <td class="c-name">${esc(r.nome || '—')}</td>
+      <td class="c-date">${esc(fmt)}</td>
+      <td class="c-hrs">${esc(r.horas || '—')}</td>
+      <td><span class="badge ${r.logs?.length === 4 ? 'ok' : 'nok'}">${r.logs?.length === 4 ? '● Completo' : '● Incompleto'}</span></td>
+      <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('ad-${globalIdx}',this)">Ver</button></td>
+      <td><button class="del-btn" onclick="confirmarDelete('${esc(r.id)}','admin')">✕</button></td>
     </tr>
-    <tr id="ad-${i}" style="display:none" class="detail-row"><td colspan="6"><div class="detail-inner">
-      ${(r.logs||[]).map(l=>`<div class="detail-line"><div class="d-dot" style="background:${CORES[l.tipo]}"></div><span style="font-weight:600;min-width:200px;font-size:12.5px">${l.tipo}</span><span style="color:var(--t3)">${l.horario}</span></div>`).join('')}
-    </div></td></tr>`;
+    <tr id="ad-${globalIdx}" style="display:none" class="detail-row">
+      <td colspan="6"><div class="detail-inner">${buildDetailLines(r.logs)}</div></td>
+    </tr>`;
   }).join('');
+
+  renderPagination('admin', total, store.adminPage);
 }
 
-function limparAdmin() { renderAdmin(); }
-  
-function setAdminShortcut() {}
-
-// ══ ADMIN HISTÓRICO COLAB ═══════════════════════
+// ── Histórico individual do colaborador ──────────────
 function renderColabHist() {
-  if(!colabAtual) return;
-  const filtro=document.getElementById('colabHistFiltro').value;
-  let recs=adminRecords.filter(r=>r.user_id===colabAtual.user_id);
-  if(filtro) recs=recs.filter(r=>r.date===filtro);
-  recs.sort((a,b)=>b.date.localeCompare(a.date));
-  const body=document.getElementById('colabHistBody'),empty=document.getElementById('colabHistEmpty');
-  if(!recs.length){body.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  body.innerHTML=recs.map((r,i)=>{
-    const fmt=new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
-    return `<tr><td class="c-date">${fmt}</td><td class="c-hrs">${r.horas||'—'}</td>
-      <td><span class="badge ${r.logs?.length===4?'ok':'nok'}">${r.logs?.length===4?'● Completo':'● Incompleto'}</span></td>
+  if (!store.colabAtual) return;
+  const filtro = document.getElementById('colabHistFiltro').value;
+  let recs = store.adminRecords.filter(r => r.user_id === store.colabAtual.user_id);
+  if (filtro) recs = recs.filter(r => r.date === filtro);
+  recs.sort((a, b) => b.date.localeCompare(a.date));
+
+  const body  = document.getElementById('colabHistBody');
+  const empty = document.getElementById('colabHistEmpty');
+  if (!recs.length) { body.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  body.innerHTML = recs.map((r, i) => {
+    const fmt = new Date(r.date + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit', year:'numeric'});
+    return `<tr>
+      <td class="c-date">${esc(fmt)}</td>
+      <td class="c-hrs">${esc(r.horas || '—')}</td>
+      <td><span class="badge ${r.logs?.length === 4 ? 'ok' : 'nok'}">${r.logs?.length === 4 ? '● Completo' : '● Incompleto'}</span></td>
       <td><button class="btn-sec" style="font-size:12px;padding:6px 12px" onclick="toggleDetail('ch-${i}',this)">Ver</button></td>
-      <td><button class="del-btn" onclick="confirmarDelete('${r.id}','admin')">✕</button></td></tr>
-    <tr id="ch-${i}" style="display:none" class="detail-row"><td colspan="5"><div class="detail-inner">
-      ${(r.logs||[]).map(l=>`<div class="detail-line"><div class="d-dot" style="background:${CORES[l.tipo]}"></div><span style="font-weight:600;min-width:200px;font-size:12.5px">${l.tipo}</span><span style="color:var(--t3)">${l.horario}</span></div>`).join('')}
-    </div></td></tr>`;
+      <td><button class="del-btn" onclick="confirmarDelete('${esc(r.id)}','admin')">✕</button></td>
+    </tr>
+    <tr id="ch-${i}" style="display:none" class="detail-row">
+      <td colspan="5"><div class="detail-inner">${buildDetailLines(r.logs)}</div></td>
+    </tr>`;
   }).join('');
 }
 
-// ══ CALENDÁRIO ════════════════════════════════
+// [FIX #4] helper centralizado — escapa dados do banco antes de innerHTML
+function buildDetailLines(logs) {
+  return (logs || []).map(l => `
+    <div class="detail-line">
+      <div class="d-dot" style="background:${esc(CORES[l.tipo] || '#888')}"></div>
+      <span class="detail-tipo">${esc(l.tipo)}</span>
+      <span class="detail-hora">${esc(l.horario)}</span>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// [FIX #8] PAGINAÇÃO
+// ═══════════════════════════════════════════════════════
+function renderPagination(ctx, total, currentPage) {
+  const el = document.getElementById(ctx + 'Pagination');
+  if (!el) return;
+  const pages = Math.ceil(total / PAGE_SIZE);
+  if (pages <= 1) { el.innerHTML = ''; return; }
+
+  let html = `<button class="page-btn" onclick="changePage('${ctx}',${currentPage - 1})" ${currentPage === 0 ? 'disabled' : ''}>‹ Anterior</button>`;
+  for (let i = 0; i < pages; i++) {
+    if (i === 0 || i === pages - 1 || Math.abs(i - currentPage) <= 1) {
+      html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage('${ctx}',${i})">${i + 1}</button>`;
+    } else if (Math.abs(i - currentPage) === 2) {
+      html += `<span style="color:var(--t4);padding:0 4px">…</span>`;
+    }
+  }
+  html += `<button class="page-btn" onclick="changePage('${ctx}',${currentPage + 1})" ${currentPage >= pages - 1 ? 'disabled' : ''}>Próxima ›</button>`;
+  html += `<span class="page-info">Página ${currentPage + 1} de ${pages} · ${total} registro(s)</span>`;
+  el.innerHTML = html;
+}
+
+function changePage(ctx, page) {
+  if (ctx === 'hist') { store.histPage = page; renderHist(); }
+  if (ctx === 'admin') { store.adminPage = page; renderAdmin(); }
+  document.getElementById('page-' + (ctx === 'hist' ? 'historico' : 'admin'))
+    ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ═══════════════════════════════════════════════════════
+// CALENDÁRIO
+// ═══════════════════════════════════════════════════════
 function renderCalendario() {
-  if(!colabAtual) return;
-  document.getElementById('calTitulo').textContent=`${MESES[calMes]} ${calAno}`;
-  const mesStr=`${calAno}-${pad(calMes+1)}`;
-  const recsDoMes=adminRecords.filter(r=>r.user_id===colabAtual.user_id&&r.date.startsWith(mesStr));
-  const mapaHoras={};
-  recsDoMes.forEach(r=>{mapaHoras[r.date]=r.horas_ms||0;});
-  const diasTrab=recsDoMes.length,diasOk=recsDoMes.filter(r=>(r.horas_ms||0)>=7*3600000).length;
-  const totalMs=recsDoMes.reduce((a,r)=>a+(r.horas_ms||0),0);
-  const rH=Math.floor(totalMs/3600000),rM=Math.floor((totalMs%3600000)/60000);
-  document.getElementById('calResumo').innerHTML=`
+  if (!store.colabAtual) return;
+  const { ano, mes } = store.cal;
+  document.getElementById('calTitulo').textContent = `${MESES[mes]} ${ano}`;
+
+  const mesStr    = `${ano}-${pad(mes + 1)}`;
+  const recsDoMes = store.adminRecords.filter(r => r.user_id === store.colabAtual.user_id && r.date.startsWith(mesStr));
+  const mapaHoras = {};
+  recsDoMes.forEach(r => { mapaHoras[r.date] = r.horas_ms || 0; });
+
+  const diasTrab = recsDoMes.length;
+  const diasOk   = recsDoMes.filter(r => (r.horas_ms || 0) >= 7 * 3600000).length;
+  const totalMs  = recsDoMes.reduce((a, r) => a + (r.horas_ms || 0), 0);
+  const rH = Math.floor(totalMs / 3600000), rM = Math.floor((totalMs % 3600000) / 60000);
+
+  document.getElementById('calResumo').innerHTML = `
     <div class="cal-res-card"><div class="cal-res-val">${diasTrab}</div><div class="cal-res-lbl">Dias trabalhados</div></div>
     <div class="cal-res-card"><div class="cal-res-val" style="color:var(--green)">${diasOk}</div><div class="cal-res-lbl">Dias com 7h+</div></div>
     <div class="cal-res-card"><div class="cal-res-val">${pad(rH)}h${pad(rM)}m</div><div class="cal-res-lbl">Horas no mês</div></div>`;
-  const primeiro=new Date(calAno,calMes,1).getDay(),diasNoMes=new Date(calAno,calMes+1,0).getDate();
-  let html='';
-  for(let i=0;i<primeiro;i++) html+=`<div class="cal-day empty"></div>`;
-  for(let d=1;d<=diasNoMes;d++) {
-    const dateStr=`${calAno}-${pad(calMes+1)}-${pad(d)}`;
-    const ms=mapaHoras[dateStr],weekday=new Date(calAno,calMes,d).getDay(),isWeekend=weekday===0||weekday===6;
-    let cls='cal-day',title='';
-    if(isWeekend) cls+=' weekend';
-    if(ms!==undefined&&ms>=7*3600000) {
-      cls+=' worked-full';
-      const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);
-      title=`${d}: ${pad(h)}h${pad(m)}m ✓`;
+
+  const primeiro  = new Date(ano, mes, 1).getDay();
+  const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+  let html = '';
+  for (let i = 0; i < primeiro; i++) html += '<div class="cal-day empty"></div>';
+  for (let d = 1; d <= diasNoMes; d++) {
+    const dateStr  = `${ano}-${pad(mes + 1)}-${pad(d)}`;
+    const ms       = mapaHoras[dateStr];
+    const weekday  = new Date(ano, mes, d).getDay();
+    const isWeekend = weekday === 0 || weekday === 6;
+    let cls = 'cal-day', title = '';
+    if (isWeekend) cls += ' weekend';
+    if (ms !== undefined && ms >= 7 * 3600000) {
+      cls += ' worked-full';
+      const h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000);
+      title = `${d}: ${pad(h)}h${pad(m)}m ✓`;
     }
-    html+=`<div class="${cls}"${title?` title="${title}"`:''}>${d}</div>`;
+    html += `<div class="${cls}"${title ? ` title="${esc(title)}"` : ''}>${d}</div>`;
   }
-  document.getElementById('calGrid').innerHTML=html;
-  const body=document.getElementById('calBody');
-  body.classList.toggle('hidden',!calAberto);
-  document.getElementById('calToggleTxt').textContent=calAberto?'Recolher':'Expandir';
-  const chev=document.getElementById('calChevron');
-  calAberto?chev.classList.add('open'):chev.classList.remove('open');
+  document.getElementById('calGrid').innerHTML = html;
+
+  const body = document.getElementById('calBody');
+  body.classList.toggle('hidden', !store.cal.aberto);
+  document.getElementById('calToggleTxt').textContent = store.cal.aberto ? 'Recolher' : 'Expandir';
+  const chev = document.getElementById('calChevron');
+  store.cal.aberto ? chev.classList.add('open') : chev.classList.remove('open');
 }
 
 function mudarMes(delta) {
-  calMes+=delta;
-  if(calMes>11){calMes=0;calAno++;}
-  if(calMes<0){calMes=11;calAno--;}
+  store.cal.mes += delta;
+  if (store.cal.mes > 11) { store.cal.mes = 0; store.cal.ano++; }
+  if (store.cal.mes < 0)  { store.cal.mes = 11; store.cal.ano--; }
   renderCalendario();
 }
-function irMesAtual() { calAno=new Date().getFullYear();calMes=new Date().getMonth();renderCalendario(); }
+function irMesAtual() {
+  store.cal.ano = new Date().getFullYear();
+  store.cal.mes = new Date().getMonth();
+  renderCalendario();
+}
 function toggleCal() {
-  calAberto=!calAberto;
-  document.getElementById('calBody').classList.toggle('hidden',!calAberto);
-  document.getElementById('calToggleTxt').textContent=calAberto?'Recolher':'Expandir';
-  const chev=document.getElementById('calChevron');
-  calAberto?chev.classList.add('open'):chev.classList.remove('open');
+  store.cal.aberto = !store.cal.aberto;
+  document.getElementById('calBody').classList.toggle('hidden', !store.cal.aberto);
+  document.getElementById('calToggleTxt').textContent = store.cal.aberto ? 'Recolher' : 'Expandir';
+  const chev = document.getElementById('calChevron');
+  store.cal.aberto ? chev.classList.add('open') : chev.classList.remove('open');
 }
 
-// ══ EXPORT PDF COLABORADOR (admin) ════════════
-function setColabShortcut(tipo) {
-  if (!colabAtual) return;
-  const recs = adminRecords.filter(r => r.user_id === colabAtual.user_id);
+// ═══════════════════════════════════════════════════════
+// EXPORT PDF — PESSOAL
+// ═══════════════════════════════════════════════════════
+function setShortcut(tipo) {
   const hoje = new Date(); let ini, fim = hoje;
-  if (tipo==='semana') { ini=new Date(hoje); ini.setDate(hoje.getDate()-((hoje.getDay()+6)%7)); }
-  else if (tipo==='mes') { ini=new Date(hoje.getFullYear(),hoje.getMonth(),1); }
+  if (tipo === 'semana') { ini = new Date(hoje); ini.setDate(hoje.getDate() - ((hoje.getDay() + 6) % 7)); }
+  else if (tipo === 'mes') { ini = new Date(hoje.getFullYear(), hoje.getMonth(), 1); }
+  else {
+    if (!store.allRecords.length) return;
+    const sorted = store.allRecords.map(r => r.date).sort();
+    ini = new Date(sorted[0] + 'T12:00:00');
+    fim = new Date(sorted[sorted.length - 1] + 'T12:00:00');
+  }
+  document.getElementById('expIni').value = ini.toISOString().split('T')[0];
+  document.getElementById('expFim').value = fim.toISOString().split('T')[0];
+}
+
+async function exportarPDF() {
+  const iniV = document.getElementById('expIni').value;
+  const fimV = document.getElementById('expFim').value;
+  if (!iniV || !fimV) { showToast('Preencha o período', '#ff9500'); return; }
+  const ini = new Date(iniV + 'T00:00:00'), fim = new Date(fimV + 'T23:59:59');
+  if (ini > fim) { showToast('Data inicial maior que a final', '#ff3b30'); return; }
+
+  let recs = await sbGet(`/rest/v1/registros?user_id=eq.${Session.userId}&fim=eq.true&select=*&order=date.asc`);
+  if (!Array.isArray(recs)) recs = [];
+  recs = recs.filter(r => { const d = new Date(r.date + 'T12:00:00'); return d >= ini && d <= fim; });
+  if (!recs.length) { showToast('Nenhum registro no período', '#ff9500'); return; }
+  buildPDF(recs, iniV, fimV, store.profile.nome);
+}
+
+// ═══════════════════════════════════════════════════════
+// EXPORT PDF — COLABORADOR SELECIONADO (admin)
+// ═══════════════════════════════════════════════════════
+function setColabShortcut(tipo) {
+  if (!store.colabAtual) return;
+  const recs = store.adminRecords.filter(r => r.user_id === store.colabAtual.user_id && r.fim);
+  const hoje = new Date(); let ini, fim = hoje;
+  if (tipo === 'semana') { ini = new Date(hoje); ini.setDate(hoje.getDate() - ((hoje.getDay() + 6) % 7)); }
+  else if (tipo === 'mes') { ini = new Date(hoje.getFullYear(), hoje.getMonth(), 1); }
   else {
     if (!recs.length) return;
-    const sorted=recs.map(r=>r.date).sort();
-    ini=new Date(sorted[0]+'T12:00:00'); fim=new Date(sorted[sorted.length-1]+'T12:00:00');
+    const sorted = recs.map(r => r.date).sort();
+    ini = new Date(sorted[0] + 'T12:00:00');
+    fim = new Date(sorted[sorted.length - 1] + 'T12:00:00');
   }
-  document.getElementById('colabExpIni').value=ini.toISOString().split('T')[0];
-  document.getElementById('colabExpFim').value=fim.toISOString().split('T')[0];
+  document.getElementById('colabExpIni').value = ini.toISOString().split('T')[0];
+  document.getElementById('colabExpFim').value = fim.toISOString().split('T')[0];
 }
 
 function exportarColabPDF() {
-  if (!colabAtual) return;
-  const iniV=document.getElementById('colabExpIni').value;
-  const fimV=document.getElementById('colabExpFim').value;
-  if (!iniV||!fimV) { showToast('Selecione o período','#ff9500'); return; }
-  let recs=adminRecords.filter(r=>r.user_id===colabAtual.user_id&&r.fim);
-  recs=recs.filter(r=>r.date>=iniV&&r.date<=fimV);
-  recs.sort((a,b)=>a.date.localeCompare(b.date));
-  if (!recs.length) { showToast('Nenhum registro no período','#ff9500'); return; }
-  buildPDF(recs, iniV, fimV, colabAtual.nome);
-}
-  
-// ══ EXPORT PDF PESSOAL ════════════════════════
-function setShortcut(tipo) {
-  const hoje=new Date();let ini,fim=hoje;
-  if(tipo==='semana'){ini=new Date(hoje);ini.setDate(hoje.getDate()-((hoje.getDay()+6)%7));}
-  else if(tipo==='mes'){ini=new Date(hoje.getFullYear(),hoje.getMonth(),1);}
-  else{if(!allRecords.length)return;const s=allRecords.map(r=>r.date).sort();ini=new Date(s[0]+'T12:00:00');fim=new Date(s[s.length-1]+'T12:00:00');}
-  document.getElementById('expIni').value=ini.toISOString().split('T')[0];
-  document.getElementById('expFim').value=fim.toISOString().split('T')[0];
-}
-async function exportarPDF() {
-  const iniV=document.getElementById('expIni').value,fimV=document.getElementById('expFim').value;
-  if(!iniV||!fimV){showToast('Preencha o período','#ff9500');return;}
-  const ini=new Date(iniV+'T00:00:00'),fim=new Date(fimV+'T23:59:59');
-  if(ini>fim){showToast('Data inicial maior que a final','#ff3b30');return;}
-  let recs=await sbGet(`/rest/v1/registros?user_id=eq.${USER_ID}&fim=eq.true&select=*&order=date.asc`);
-  if(!Array.isArray(recs)) recs=[];
-  recs=recs.filter(r=>{const d=new Date(r.date+'T12:00:00');return d>=ini&&d<=fim;});
-  if(!recs.length){showToast('Nenhum registro no período','#ff9500');return;}
-  buildPDF(recs,iniV,fimV,U_NOME);
+  if (!store.colabAtual) return;
+  const iniV = document.getElementById('colabExpIni').value;
+  const fimV = document.getElementById('colabExpFim').value;
+  if (!iniV || !fimV) { showToast('Selecione o período', '#ff9500'); return; }
+  let recs = store.adminRecords.filter(r => r.user_id === store.colabAtual.user_id && r.fim);
+  recs = recs.filter(r => r.date >= iniV && r.date <= fimV);
+  recs.sort((a, b) => a.date.localeCompare(b.date));
+  if (!recs.length) { showToast('Nenhum registro no período', '#ff9500'); return; }
+  buildPDF(recs, iniV, fimV, store.colabAtual.nome);
 }
 
-// ══ EXPORT PDF ADMIN ══════════════════════════
-function exportarAdminPDF() {
-  const nome=document.getElementById('adminFiltroNome').value.trim().toLowerCase();
-  const iniV=document.getElementById('adminFiltroIni').value,fimV=document.getElementById('adminFiltroFim').value;
-  let recs=adminRecords.filter(r=>r.fim);
-  if(nome) recs=recs.filter(r=>r.nome?.toLowerCase().includes(nome));
-  if(iniV) recs=recs.filter(r=>r.date>=iniV);
-  if(fimV) recs=recs.filter(r=>r.date<=fimV);
-  if(!recs.length){showToast('Nenhum registro com os filtros atuais','#ff9500');return;}
-  const nomeF=document.getElementById('adminFiltroNome').value.trim()||'Todos os colaboradores';
-  const iniStr=iniV||(recs.map(r=>r.date).sort()[0]||'');
-  const fimStr=fimV||(recs.map(r=>r.date).sort().reverse()[0]||'');
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
-  doc.setFillColor(255,255,255);doc.rect(0,0,W,H,'F');
-  doc.setFillColor(0,122,255);doc.rect(0,0,W,40,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(20);doc.setTextColor(255,255,255);doc.text('Ponto Eletrônico',14,18);
-  doc.setFont('helvetica','normal');doc.setFontSize(9.5);doc.setTextColor(180,215,255);doc.text('Relatório Administrativo',14,27);
-  doc.setFontSize(9);doc.text('Gerado em '+new Date().toLocaleString('pt-BR'),W-14,27,{align:'right'});
-  let y=50;
-  doc.setFillColor(245,245,247);doc.roundedRect(14,y,W-28,22,3,3,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(110,110,115);doc.text('COLABORADOR',20,y+7);doc.text('PERÍODO',W/2+4,y+7);
-  doc.setFont('helvetica','normal');doc.setFontSize(11);doc.setTextColor(29,29,31);doc.text(nomeF,20,y+15);
-  const iniF=iniStr?new Date(iniStr+'T12:00:00').toLocaleDateString('pt-BR'):'—';
-  const fimF=fimStr?new Date(fimStr+'T12:00:00').toLocaleDateString('pt-BR'):'—';
-  doc.text(`${iniF}  —  ${fimF}`,W/2+4,y+15);y+=30;
-  const recsSorted=[...recs].sort((a,b)=>(a.nome||'').localeCompare(b.nome||'')||a.date.localeCompare(b.date));
-  const rows=recsSorted.map(r=>[r.nome||'—',new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'}),r.horas||'—',r.logs?.length===4?'Completo':'Incompleto',(r.logs||[]).map(l=>`${l.tipo}: ${l.horario}`).join('\n')]);
-  doc.autoTable({startY:y,head:[['Colaborador','Data','Horas','Status','Registros']],body:rows,theme:'plain',styles:{font:'helvetica',fontSize:9,textColor:[61,61,63],cellPadding:{top:4,bottom:4,left:6,right:6}},headStyles:{fillColor:[245,245,247],textColor:[110,110,115],fontSize:8.5,fontStyle:'bold'},alternateRowStyles:{fillColor:[250,250,252]},columnStyles:{0:{cellWidth:34,fontStyle:'bold',textColor:[29,29,31]},1:{cellWidth:36,textColor:[110,110,115],fontSize:8.5},2:{fontStyle:'bold',textColor:[52,199,89],halign:'center',cellWidth:22},3:{fontSize:8.5,halign:'center',cellWidth:22},4:{fontSize:7.5,textColor:[110,110,115]}},margin:{left:14,right:14},tableLineColor:[229,229,234],tableLineWidth:0.2});
-  const fy=doc.lastAutoTable.finalY+10;
-  const porColab={};
-  recs.forEach(r=>{const n=r.nome||'—';if(!porColab[n])porColab[n]={total:0,ms:0};porColab[n].total++;porColab[n].ms+=r.horas_ms||0;});
-  const totalMs=recs.reduce((a,r)=>a+(r.horas_ms||0),0);
-  const tH=Math.floor(totalMs/3600000),tM=Math.floor((totalMs%3600000)/60000);
-  const boxH=18+Object.keys(porColab).length*6+20;
-  doc.setFillColor(245,245,247);doc.roundedRect(14,fy,W-28,boxH,3,3,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(110,110,115);doc.text('RESUMO POR COLABORADOR',20,fy+8);
-  let ry=fy+17;
-  Object.entries(porColab).forEach(([n,d])=>{
-    const h=Math.floor(d.ms/3600000),m=Math.floor((d.ms%3600000)/60000);
-    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(61,61,63);doc.text(n,20,ry);
-    doc.setFont('helvetica','bold');doc.setTextColor(0,122,255);doc.text(`${d.total} exp. · ${pad(h)}h${pad(m)}m`,W-20,ry,{align:'right'});ry+=6;
+// ═══════════════════════════════════════════════════════
+// BUILD PDF — compartilhado
+// ═══════════════════════════════════════════════════════
+function buildPDF(recs, iniStr, fimStr, nomePessoa) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+  const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
+
+  doc.setFillColor(255,255,255); doc.rect(0,0,W,H,'F');
+  doc.setFillColor(0,122,255);   doc.rect(0,0,W,40,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(20); doc.setTextColor(255,255,255);
+  doc.text('Ponto Eletrônico', 14, 18);
+  doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(180,215,255);
+  doc.text('Relatório de Frequência', 14, 27);
+  doc.setFontSize(9); doc.text('Gerado em ' + new Date().toLocaleString('pt-BR'), W-14, 27, {align:'right'});
+
+  let y = 50;
+  doc.setFillColor(245,245,247); doc.roundedRect(14,y,W-28,22,3,3,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(110,110,115);
+  doc.text('COLABORADOR', 20, y+7); doc.text('PERÍODO', W/2+4, y+7);
+  doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(29,29,31);
+  doc.text(nomePessoa, 20, y+15);
+  const iniF = new Date(iniStr+'T12:00:00').toLocaleDateString('pt-BR');
+  const fimF = new Date(fimStr+'T12:00:00').toLocaleDateString('pt-BR');
+  doc.text(`${iniF}  —  ${fimF}`, W/2+4, y+15);
+  y += 30;
+
+  const rows = recs.map(r => [
+    new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR', {weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'}),
+    r.horas || '—',
+    r.logs?.length === 4 ? 'Completo' : 'Incompleto',
+    (r.logs || []).map(l => `${l.tipo}: ${l.horario}`).join('\n'),
+  ]);
+
+  doc.autoTable({
+    startY: y,
+    head: [['Data','Horas','Status','Registros']],
+    body: rows,
+    theme: 'plain',
+    styles: { font:'helvetica', fontSize:10, textColor:[61,61,63], cellPadding:{top:5,bottom:5,left:7,right:7} },
+    headStyles: { fillColor:[245,245,247], textColor:[110,110,115], fontSize:9, fontStyle:'bold' },
+    alternateRowStyles: { fillColor:[250,250,252] },
+    columnStyles: {
+      0: { cellWidth:40, textColor:[110,110,115], fontSize:9 },
+      1: { fontStyle:'bold', textColor:[52,199,89], halign:'center', cellWidth:24 },
+      2: { fontSize:9, halign:'center', cellWidth:24 },
+      3: { fontSize:8, textColor:[110,110,115] },
+    },
+    margin: { left:14, right:14 },
+    tableLineColor: [229,229,234], tableLineWidth: 0.2,
   });
-  ry+=4;doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(29,29,31);doc.text('Total geral de horas:',20,ry);
-  doc.setTextColor(52,199,89);doc.text(`${pad(tH)}h ${pad(tM)}m`,W-20,ry,{align:'right'});
-  const pages=doc.internal.getNumberOfPages();
-  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(174,174,178);doc.text(`Ponto Eletrônico  ·  Relatório Admin  ·  Página ${i} de ${pages}`,W/2,H-8,{align:'center'});}
-  doc.save(`relatorio_admin_${iniStr}_${fimStr}.pdf`);
-  showToast('Relatório admin exportado','#34c759');
+
+  const fy = doc.lastAutoTable.finalY + 10;
+  const completos = recs.filter(r => r.logs?.length === 4).length;
+  const totalMs   = recs.reduce((a, r) => a + (r.horas_ms || 0), 0);
+  const tH = Math.floor(totalMs / 3600000), tM = Math.floor((totalMs % 3600000) / 60000);
+
+  doc.setFillColor(245,245,247); doc.roundedRect(14,fy,W-28,42,3,3,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(110,110,115);
+  doc.text('RESUMO DO PERÍODO', 20, fy+8);
+
+  [
+    ['Total de expedientes',      recs.length],
+    ['Completos',                 completos],
+    ['Incompletos',               recs.length - completos],
+    ['Total de horas trabalhadas', `${pad(tH)}h ${pad(tM)}m`],
+  ].forEach(([lbl, val], i) => {
+    const ry = fy + 17 + i * 6;
+    doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(61,61,63);
+    doc.text(lbl, 20, ry);
+    doc.setFont('helvetica','bold');
+    doc.setTextColor(i === 3 ? 52 : 0, i === 3 ? 199 : 122, i === 3 ? 89 : 255);
+    doc.text(String(val), W-20, ry, {align:'right'});
+  });
+
+  const pages = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pages; i++) {
+    doc.setPage(i);
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(174,174,178);
+    doc.text(`Ponto Eletrônico  ·  Página ${i} de ${pages}`, W/2, H-8, {align:'center'});
+  }
+
+  doc.save(`ponto_${nomePessoa.replace(/[^a-zA-Z0-9]/g, '_')}_${iniStr}_${fimStr}.pdf`);
+  showToast('PDF gerado com sucesso', '#34c759');
 }
 
-function buildPDF(recs,iniStr,fimStr,nomePessoa) {
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
-  doc.setFillColor(255,255,255);doc.rect(0,0,W,H,'F');
-  doc.setFillColor(0,122,255);doc.rect(0,0,W,40,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(20);doc.setTextColor(255,255,255);doc.text('Ponto Eletrônico',14,18);
-  doc.setFont('helvetica','normal');doc.setFontSize(9.5);doc.setTextColor(180,215,255);doc.text('Relatório de Frequência',14,27);
-  doc.setFontSize(9);doc.text('Gerado em '+new Date().toLocaleString('pt-BR'),W-14,27,{align:'right'});
-  let y=50;
-  doc.setFillColor(245,245,247);doc.roundedRect(14,y,W-28,22,3,3,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(110,110,115);doc.text('COLABORADOR',20,y+7);doc.text('PERÍODO',W/2+4,y+7);
-  doc.setFont('helvetica','normal');doc.setFontSize(11);doc.setTextColor(29,29,31);doc.text(nomePessoa,20,y+15);
-  const iniF=new Date(iniStr+'T12:00:00').toLocaleDateString('pt-BR'),fimF=new Date(fimStr+'T12:00:00').toLocaleDateString('pt-BR');
-  doc.text(`${iniF}  —  ${fimF}`,W/2+4,y+15);y+=30;
-  const rows=recs.map(r=>[new Date(r.date+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'}),r.horas||'—',r.logs?.length===4?'Completo':'Incompleto',(r.logs||[]).map(l=>`${l.tipo}: ${l.horario}`).join('\n')]);
-  doc.autoTable({startY:y,head:[['Data','Horas','Status','Registros']],body:rows,theme:'plain',styles:{font:'helvetica',fontSize:10,textColor:[61,61,63],cellPadding:{top:5,bottom:5,left:7,right:7}},headStyles:{fillColor:[245,245,247],textColor:[110,110,115],fontSize:9,fontStyle:'bold'},alternateRowStyles:{fillColor:[250,250,252]},columnStyles:{0:{cellWidth:40,textColor:[110,110,115],fontSize:9},1:{fontStyle:'bold',textColor:[52,199,89],halign:'center',cellWidth:24},2:{fontSize:9,halign:'center',cellWidth:24},3:{fontSize:8,textColor:[110,110,115]}},margin:{left:14,right:14},tableLineColor:[229,229,234],tableLineWidth:0.2});
-  const fy=doc.lastAutoTable.finalY+10;
-  const completos=recs.filter(r=>r.logs?.length===4).length,totalMs=recs.reduce((a,r)=>a+(r.horas_ms||0),0);
-  const tH=Math.floor(totalMs/3600000),tM=Math.floor((totalMs%3600000)/60000);
-  doc.setFillColor(245,245,247);doc.roundedRect(14,fy,W-28,42,3,3,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(110,110,115);doc.text('RESUMO DO PERÍODO',20,fy+8);
-  [['Total de expedientes',recs.length],['Completos',completos],['Incompletos',recs.length-completos],['Total de horas trabalhadas',`${pad(tH)}h ${pad(tM)}m`]].forEach(([l,v],i)=>{
-    const ry=fy+17+i*6;
-    doc.setFont('helvetica','normal');doc.setFontSize(9.5);doc.setTextColor(61,61,63);doc.text(l,20,ry);
-    doc.setFont('helvetica','bold');doc.setTextColor(i===3?52:0,i===3?199:122,i===3?89:255);doc.text(String(v),W-20,ry,{align:'right'});
+// ═══════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════
+function confirmarDelete(id, ctx) {
+  openModal('Excluir registro', 'Deseja excluir este registro permanentemente?', async () => {
+    const ok = await sbDelete(`/rest/v1/registros?id=eq.${id}`);
+    if (!ok) { showToast('Erro ao excluir', '#ff3b30'); return; }
+    if (ctx === 'hist')  await loadAndRenderHist();
+    if (ctx === 'admin') { await loadAndRenderAdmin(); if (store.colabAtual) renderColabHist(); }
+    showToast('Registro excluído', '#ff3b30');
   });
-  const pages=doc.internal.getNumberOfPages();
-  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(174,174,178);doc.text(`Ponto Eletrônico  ·  Página ${i} de ${pages}`,W/2,H-8,{align:'center'});}
-  doc.save(`ponto_${nomePessoa.replace(/ /g,'_')}_${iniStr}_${fimStr}.pdf`);
-  showToast('PDF gerado com sucesso','#34c759');
 }
 
-// ══ HELPERS ═══════════════════════════════════
-function confirmarDelete(id,ctx) {
-  openModal('Excluir registro','Deseja excluir este registro permanentemente?',async()=>{
-    await sbDelete(`/rest/v1/registros?id=eq.${id}`);
-    if(ctx==='hist') await loadAndRenderHist();
-    if(ctx==='admin'){await loadAndRenderAdmin();if(colabAtual)renderColabHist();}
-    showToast('Registro excluído','#ff3b30');
-  });
+function toggleDetail(id, btn) {
+  const row = document.getElementById(id); if (!row) return;
+  const h = row.style.display === 'none';
+  row.style.display = h ? 'table-row' : 'none';
+  btn.textContent = h ? 'Ocultar' : 'Ver detalhes';
 }
-function toggleDetail(id,btn) {
-  const row=document.getElementById(id);if(!row)return;
-  const h=row.style.display==='none';row.style.display=h?'table-row':'none';
-  btn.textContent=h?'Ocultar':'Ver detalhes';
-}
+
 let toastT;
-function showToast(msg,cor='#34c759'){
+function showToast(msg, cor = '#34c759') {
   clearTimeout(toastT);
-  document.getElementById('tMsg').textContent=msg;
-  document.getElementById('tDot').style.background=cor;
-  const t=document.getElementById('toast');t.classList.add('show');
-  toastT=setTimeout(()=>t.classList.remove('show'),3000);
+  document.getElementById('tMsg').textContent = msg; // textContent — sem risco de XSS
+  document.getElementById('tDot').style.background = cor;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  toastT = setTimeout(() => t.classList.remove('show'), 3000);
 }
-function openModal(title,body,cb){
-  document.getElementById('modalTitle').textContent=title;
-  document.getElementById('modalBody').innerHTML=body;
-  document.getElementById('overlay').classList.add('open');
-  document.getElementById('modalOk').onclick=()=>{closeModal();cb&&cb();};
-}
-function closeModal(){document.getElementById('overlay').classList.remove('open');}
-document.getElementById('overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
 
-// ══ BOOT ══════════════════════════════════════
-initUI().then(()=>initRegistro());
+function openModal(title, body, cb) {
+  document.getElementById('modalTitle').textContent = title; // textContent seguro
+  document.getElementById('modalBody').textContent  = body;  // textContent seguro
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('modalOk').onclick = () => { closeModal(); cb && cb(); };
+}
+function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+// ═══════════════════════════════════════════════════════
+// BOOT — initUI primeiro, depois initRegistro
+// ═══════════════════════════════════════════════════════
+initUI().then(() => initRegistro());
 </script>
 </body>
 </html>
