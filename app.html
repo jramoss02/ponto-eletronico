@@ -974,16 +974,24 @@ async function loadAndRenderAdmin() {
   store.adminPage = 0;
 
   // [FIX #5] join com profiles para trazer o nome real e atualizado
-  store.adminRecords = await sbGet(
-    `/rest/v1/registros?select=*,profiles!user_id(nome,email)&order=date.desc`
-  );
-  if (!Array.isArray(store.adminRecords)) store.adminRecords = [];
+  // Busca registros
+  const registros = await sbGet(`/rest/v1/registros?select=*&order=date.desc`);
+  // Busca perfis separadamente
+  const perfis = await sbGet(`/rest/v1/profiles?select=id,nome,email`);
 
-  // Normaliza: extrai nome do join
-  store.adminRecords = store.adminRecords.map(r => ({
-    ...r,
-    nome: r.profiles?.nome || r.nome || '—',
-  }));
+  // Cria mapa id → nome para lookup rápido
+  const perfilMap = {};
+  if (Array.isArray(perfis)) {
+    perfis.forEach(p => { perfilMap[p.id] = p; });
+  }
+
+  // Combina os dados
+  store.adminRecords = Array.isArray(registros)
+    ? registros.map(r => ({
+        ...r,
+        nome: perfilMap[r.user_id]?.nome || r.nome || '—',
+      }))
+    : [];
 
   renderAdminStats();
   renderAdmin();
